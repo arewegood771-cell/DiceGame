@@ -13,6 +13,12 @@
         margin: 0;
         padding: 0;
         overflow-x: hidden;
+        width: 100vw;
+        height: 100vh;
+      }
+      #root {
+        width: 100%;
+        height: 100%;
       }
       .stars-bg {
         background: linear-gradient(to bottom, #001a4d, #0d47a1, #1976d2);
@@ -95,6 +101,18 @@
 
           React.useEffect(() => {
             audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Resume AudioContext on first user interaction
+            const resumeAudio = () => {
+              if (audioContextRef.current.state === 'suspended') {
+                audioContextRef.current.resume();
+              }
+            };
+            
+            document.addEventListener('click', resumeAudio, { once: true });
+            document.addEventListener('touchstart', resumeAudio, { once: true });
+            document.addEventListener('keydown', resumeAudio, { once: true });
+            
             loadSavedSheets();
             
             const handleKeyDown = (e) => {
@@ -259,7 +277,7 @@
           const isMobile = window.innerWidth < 768;
 
           return React.createElement('div', { 
-            className: 'stars-bg min-h-screen p-2 sm:p-4'
+            className: 'stars-bg min-h-screen w-full p-2 sm:p-4'
           },
             React.createElement('div', { className: 'max-w-7xl mx-auto relative z-10' },
               React.createElement('h1', { 
@@ -369,11 +387,11 @@
 
               React.createElement('div', { className: 'bg-white/20 backdrop-blur-lg rounded-lg sm:rounded-xl p-3 sm:p-4 text-white text-xs sm:text-sm shadow-xl' },
                 React.createElement('h3', { className: 'font-semibold mb-2 text-sm sm:text-base' }, 'Cara Pakai'),
-                React.createElement('p', { className: 'mb-1 sm:mb-2' }, '• Format: ps:klo ga bisa pake gpt buat notenyaaaa (e.g., C4-500 E4-500)'),
-                React.createElement('p', { className: 'mb-1 sm:mb-2' }, '• Pakai keyboard (A-L on PC)'),
-                React.createElement('p', { className: 'mb-2 sm:mb-3' }, '• Duration in milliseconds (500 = 0.5 sec)'),
+                React.createElement('p', { className: 'mb-1 sm:mb-2' }, '• Format: Note-Durasi gitu sih 😹 (contoh: C4-500 E4-500)'),
+                React.createElement('p', { className: 'mb-1 sm:mb-2' }, '• Pake keyboard aja bro 😹 (A-L kalo di PC)'),
+                React.createElement('p', { className: 'mb-2 sm:mb-3' }, '• Durasi pake milidetik ya 🥀 (500 = setengah detik)'),
                 React.createElement('div', { className: 'mt-2 sm:mt-3 p-2 sm:p-3 bg-green-500/30 rounded-lg border border-green-400/50' },
-                  React.createElement('p', { className: 'font-semibold mb-1' }, 'Coba ini":'),
+                  React.createElement('p', { className: 'font-semibold mb-1' }, 'Cobain deh ini 😹:'),
                   React.createElement('code', { className: 'text-xs block bg-black/30 p-2 rounded overflow-x-auto' }, 
                     'G4-400 A4-400 C5-400 A4-400 E5-600 D5-400 C5-600 A4-400 G4-400 A4-400 C5-600 D5-600 C5-600 A4-800 G4-400 A4-400 C5-400 A4-400 C5-600 D5-600 B4-700 A4-400 G4-400 A4-400 D5-600 C5-1000 A4-300 C5-300 D5-400 E5-600'
                   )
