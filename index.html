@@ -1,125 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Full Playable Piano</title>
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body{margin:0;padding:0;background:#0d47a1;color:white;font-family:sans-serif;}
-.piano-container{position:relative;width:100%;max-width:1200px;margin:auto;user-select:none;}
-.white-key{display:inline-block;width:40px;height:200px;margin:1px;background:white;border:1px solid black;position:relative;z-index:1;cursor:pointer;}
-.white-key.active{background:yellow;}
-.black-key{position:absolute;width:25px;height:120px;background:black;top:0;z-index:2;cursor:pointer;margin-left:-12px;}
-.black-key.active{background:orange;}
-.controls{text-align:center;margin:10px;}
-textarea{width:100%;height:80px;background:rgba(255,255,255,0.2);color:white;border:none;padding:5px;font-family:monospace;}
-button{margin:5px;padding:5px 10px;background-purple-500 hover:bg-purple-600;color:white;border:none;border-radius:5px;cursor:pointer;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Runner Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #2c3e50;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        #gameContainer {
+            text-align: center;
+        }
+        
+        canvas {
+            border: 3px solid #333;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        #score {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: white;
+        }
+        
+        #instructions {
+            font-size: 18px;
+            color: #ecf0f1;
+            margin: 10px 0;
+        }
+        
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: none;
+        }
+        
+        .game-over h2 {
+            margin: 0 0 10px 0;
+            color: #d9534f;
+        }
+        
+        .game-over button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            font-size: 18px;
+            background: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .game-over button:hover {
+            background: #4cae4c;
+        }
+    </style>
 </head>
 <body>
-<div id="root"></div>
-<script type="text/babel">
-
-const Piano = () => {
-  const [activeKeys, setActiveKeys] = React.useState(new Set());
-  const [sheet, setSheet] = React.useState('');
-  const [isPlaying, setIsPlaying] = React.useState(false);
-  const audioCtxRef = React.useRef(null);
-  const timeoutsRef = React.useRef([]);
-
-  const generatePianoKeys = () => {
-    const notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-    const keys = [];
-    for(let octave=3; octave<=5; octave++){
-      for(let i=0;i<notes.length;i++){
-        const note = notes[i];
-        const isWhite = !note.includes('#');
-        const freq = 440 * Math.pow(2, (octave - 4) + (i - 9)/12);
-        keys.push({ note: note+octave, freq: freq, white: isWhite });
-      }
-    }
-    return keys;
-  };
-
-  const keys = generatePianoKeys();
-
-  React.useEffect(()=>{
-    audioCtxRef.current = new (window.AudioContext||window.webkitAudioContext)();
-    return ()=>{audioCtxRef.current.close();}
-  },[]);
-
-  const playNote = (freq,duration=400)=>{
-    const ctx = audioCtxRef.current;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.frequency.value = freq;
-    osc.type='sine';
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    gain.gain.setValueAtTime(0.7,ctx.currentTime);
-    osc.start();
-    osc.stop(ctx.currentTime+duration/1000);
-  };
-
-  const parseSheet = (sheetStr)=>{
-    return sheetStr.trim().split(/\s+/).map(n=>{
-      const [note,dur]=n.split('-');
-      return {note:note.toUpperCase(),duration:parseInt(dur)||400};
-    });
-  };
-
-  const playSheet = ()=>{
-    if(!sheet.trim()) return alert('Masukin sheet dulu!');
-    setIsPlaying(true);
-    const notes=parseSheet(sheet);
-    let delay=0;
-    notes.forEach(n=>{
-      const keyObj = keys.find(k=>k.note===n.note);
-      if(keyObj){
-        const t=setTimeout(()=>{
-          playNote(keyObj.freq,n.duration);
-          setActiveKeys(prev=>new Set(prev).add(n.note));
-          setTimeout(()=>setActiveKeys(prev=>{
-            const s = new Set(prev); s.delete(n.note); return s;
-          }),n.duration);
-        },delay);
-        timeoutsRef.current.push(t);
-        delay+=n.duration+50;
-      }
-    });
-    setTimeout(()=>setIsPlaying(false),delay);
-  };
-
-  const stopPlayback = ()=>{
-    setIsPlaying(false);
-    timeoutsRef.current.forEach(t=>clearTimeout(t));
-    timeoutsRef.current=[];
-    setActiveKeys(new Set());
-  };
-
-  return <div className="piano-container">
-    <div className="controls">
-      <textarea placeholder="C4-400 D4-400 ..." value={sheet} onChange={e=>setSheet(e.target.value)} disabled={isPlaying}></textarea><br/>
-      <button onClick={playSheet} disabled={isPlaying}>Play</button>
-      <button onClick={stopPlayback} disabled={!isPlaying}>Stop</button>
+    <div id="gameContainer">
+        <div id="score">Score: 0</div>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div id="instructions">Pencet SPACE/Tap untuk melompati sawit!</div>
+        
+        <div class="game-over" id="gameOver">
+            <h2>Game Over!</h2>
+            <p id="finalScore">Score: 0</p>
+            <button onclick="restartGame()">Main Lagi</button>
+        </div>
     </div>
-    <div style={{position:'relative',height:'220px'}}>
-      {keys.map((k,i)=>{
-        return k.white?
-        <div key={k.note} className={`white-key ${activeKeys.has(k.note)?'active':''}`} onClick={()=>playNote(k.freq)}></div>
-        :
-        <div key={k.note} className={`black-key ${activeKeys.has(k.note)?'active':''}`} onClick={()=>playNote(k.freq)} style={{left:`${i*40-12}px`}}></div>
-      })}
-    </div>
-  </div>;
-};
 
-ReactDOM.createRoot(document.getElementById('root')).render(<Piano/>);
-
-</script>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Game variables
+        let score = 0;
+        let gameSpeed = 6;
+        let gravity = 0.6;
+        let isGameOver = false;
+        let gameStarted = false;
+        let backgroundX = 0;
+        let groundX = 0;
+        
+        // Load images
+        const playerImg = new Image();
+        playerImg.src = 'https://cdn.builder.io/api/v1/image/assets%2F1fa6df5694b24cbba3fccaa86dcc9964%2F3e99683a50664fcfb94c85fb9ddf5e46';
+        
+        const backgroundImg = new Image();
+        backgroundImg.src = 'https://cdn.builder.io/api/v1/image/assets%2F1fa6df5694b24cbba3fccaa86dcc9964%2F27d33b54ce6c47e5952e77b5f3097b7e';
+        
+        const groundImg = new Image();
+        groundImg.src = 'https://cdn.builder.io/api/v1/image/assets%2F1fa6df5694b24cbba3fccaa86dcc9964%2F8e52f976d77c4bb9b2ba95a9feda6a88';
+        
+        const obstacleImg = new Image();
+        obstacleImg.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA0MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIxNSIgeT0iMzAiIHdpZHRoPSIxMCIgaGVpZ2h0PSI1MCIgZmlsbD0iIzhCNjkxNCIvPjxlbGxpcHNlIGN4PSIxMCIgY3k9IjE1IiByeD0iOCIgcnk9IjEyIiBmaWxsPSIjMjI4QjIyIi8+PGVsbGlwc2UgY3g9IjIwIiBjeT0iOCIgcng9IjEwIiByeT0iMTQiIGZpbGw9IiMyMjhCMjIiLz48ZWxsaXBzZSBjeD0iMzAiIGN5PSIxNSIgcng9IjgiIHJ5PSIxMiIgZmlsbD0iIzIyOEIyMiIvPjxlbGxpcHNlIGN4PSIxNSIgY3k9IjI4IiByeD0iNiIgcnk9IjgiIGZpbGw9IiMyMjhCMjIiLz48ZWxsaXBzZSBjeD0iMjUiIGN5PSIyOCIgcng9IjYiIHJ5PSI4IiBmaWxsPSIjMjI4QjIyIi8+PC9zdmc+';
+        
+        // Load jump sound
+        const jumpSound = new Audio('https://www.myinstants.com/media/sounds/hidup-jokowi.mp3');
+        jumpSound.volume = 0.5;
+        
+        // Player object
+        const player = {
+            x: 80,
+            y: canvas.height - 170,
+            width: 80,
+            height: 80,
+            velocityY: 0,
+            jumping: false,
+            
+            draw() {
+                if (playerImg.complete) {
+                    ctx.drawImage(playerImg, this.x, this.y, this.width, this.height);
+                } else {
+                    ctx.fillStyle = '#4169E1';
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                }
+            },
+            
+            jump() {
+                if (!this.jumping && gameStarted && !isGameOver) {
+                    this.velocityY = -13;
+                    this.jumping = true;
+                    // Play jump sound
+                    jumpSound.currentTime = 0;
+                    jumpSound.play().catch(e => console.log('Audio play failed:', e));
+                }
+            },
+            
+            update() {
+                this.velocityY += gravity;
+                this.y += this.velocityY;
+                
+                const groundLevel = canvas.height - 170;
+                if (this.y >= groundLevel) {
+                    this.y = groundLevel;
+                    this.velocityY = 0;
+                    this.jumping = false;
+                }
+            }
+        };
+        
+        // Obstacles array
+        const obstacles = [];
+        
+        class Obstacle {
+            constructor() {
+                this.width = 40;
+                this.height = 80;
+                this.x = canvas.width;
+                this.y = canvas.height - 170 - this.height;
+            }
+            
+            draw() {
+                if (obstacleImg.complete) {
+                    ctx.drawImage(obstacleImg, this.x, this.y, this.width, this.height);
+                } else {
+                    ctx.fillStyle = '#228B22';
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                }
+            }
+            
+            update() {
+                this.x -= gameSpeed;
+            }
+            
+            isOffScreen() {
+                return this.x + this.width < 0;
+            }
+            
+            collidesWith(player) {
+                return (
+                    player.x < this.x + this.width - 10 &&
+                    player.x + player.width - 20 > this.x &&
+                    player.y < this.y + this.height - 10 &&
+                    player.y + player.height - 10 > this.y
+                );
+            }
+        }
+        
+        // Spawn obstacles
+        let obstacleTimer = 0;
+        const obstacleInterval = 100;
+        
+        function spawnObstacle() {
+            if (obstacleTimer >= obstacleInterval) {
+                obstacles.push(new Obstacle());
+                obstacleTimer = 0;
+            }
+            obstacleTimer++;
+        }
+        
+        // Draw scrolling background
+        function drawBackground() {
+            if (backgroundImg.complete) {
+                const bgSpeed = gameSpeed * 0.3;
+                backgroundX -= bgSpeed;
+                
+                if (backgroundX <= -canvas.width) {
+                    backgroundX = 0;
+                }
+                
+                ctx.drawImage(backgroundImg, backgroundX, 0, canvas.width, canvas.height);
+                ctx.drawImage(backgroundImg, backgroundX + canvas.width, 0, canvas.width, canvas.height);
+            } else {
+                ctx.fillStyle = '#87CEEB';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+        
+        // Draw scrolling ground
+        function drawGround() {
+            if (groundImg.complete) {
+                groundX -= gameSpeed;
+                
+                if (groundX <= -canvas.width) {
+                    groundX = 0;
+                }
+                
+                const groundHeight = 120;
+                const groundY = canvas.height - groundHeight;
+                
+                ctx.drawImage(groundImg, groundX, groundY, canvas.width, groundHeight);
+                ctx.drawImage(groundImg, groundX + canvas.width, groundY, canvas.width, groundHeight);
+            } else {
+                ctx.fillStyle = '#8B7355';
+                ctx.fillRect(0, canvas.height - 120, canvas.width, 120);
+            }
+        }
+        
+        // Update score
+        function updateScore() {
+            if (!isGameOver && gameStarted) {
+                score++;
+                document.getElementById('score').textContent = 'Score: ' + Math.floor(score / 5);
+                
+                if (score % 500 === 0) {
+                    gameSpeed += 0.5;
+                }
+            }
+        }
+        
+        // Game loop
+        function gameLoop() {
+            if (isGameOver) return;
+            
+            drawBackground();
+            drawGround();
+            
+            if (gameStarted) {
+                player.update();
+                spawnObstacle();
+                updateScore();
+                
+                obstacles.forEach((obstacle, index) => {
+                    obstacle.update();
+                    obstacle.draw();
+                    
+                    if (obstacle.isOffScreen()) {
+                        obstacles.splice(index, 1);
+                    }
+                    
+                    if (obstacle.collidesWith(player)) {
+                        gameOver();
+                    }
+                });
+            }
+            
+            player.draw();
+            
+            if (!gameStarted) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'white';
+                ctx.font = '30px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Pencet SPACE/Tap untuk Mulai!', canvas.width / 2, canvas.height / 2);
+            }
+            
+            requestAnimationFrame(gameLoop);
+        }
+        
+        function gameOver() {
+            isGameOver = true;
+            document.getElementById('gameOver').style.display = 'block';
+            document.getElementById('finalScore').textContent = 'Score: ' + Math.floor(score / 5);
+        }
+        
+        function restartGame() {
+            score = 0;
+            gameSpeed = 6;
+            isGameOver = false;
+            gameStarted = false;
+            obstacles.length = 0;
+            obstacleTimer = 0;
+            backgroundX = 0;
+            groundX = 0;
+            player.y = canvas.height - 170;
+            player.velocityY = 0;
+            player.jumping = false;
+            document.getElementById('gameOver').style.display = 'none';
+            document.getElementById('score').textContent = 'Score: 0';
+            gameLoop();
+        }
+        
+        // Event listeners
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (!gameStarted) {
+                    gameStarted = true;
+                } else {
+                    player.jump();
+                }
+            }
+        });
+        
+        canvas.addEventListener('click', () => {
+            if (!gameStarted) {
+                gameStarted = true;
+            } else {
+                player.jump();
+            }
+        });
+        
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (!gameStarted) {
+                gameStarted = true;
+            } else {
+                player.jump();
+            }
+        });
+        
+        // Prevent scrolling on mobile
+        document.body.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+        
+        // Start game
+        gameLoop();
+    </script>
 </body>
 </html>
