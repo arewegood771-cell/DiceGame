@@ -159,15 +159,23 @@
           React.useEffect(() => {
             audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
             
-            const resumeAudio = () => {
-              if (audioContextRef.current.state === 'suspended') {
-                audioContextRef.current.resume();
+            // Force resume on any user interaction
+            const resumeAudio = async () => {
+              if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
+                try {
+                  await audioContextRef.current.resume();
+                  console.log('AudioContext resumed successfully! 😹');
+                } catch (e) {
+                  console.error('Resume failed 💔', e);
+                }
               }
             };
             
-            document.addEventListener('click', resumeAudio, { once: true });
-            document.addEventListener('touchstart', resumeAudio, { once: true });
-            document.addEventListener('keydown', resumeAudio, { once: true });
+            // Add multiple event listeners
+            const events = ['click', 'touchstart', 'keydown', 'mousedown'];
+            events.forEach(event => {
+              document.addEventListener(event, resumeAudio);
+            });
             
             loadSavedSheets();
             
@@ -186,6 +194,9 @@
             return () => {
               stopPlayback();
               window.removeEventListener('keydown', handleKeyDown);
+              events.forEach(event => {
+                document.removeEventListener(event, resumeAudio);
+              });
               if (audioContextRef.current) {
                 audioContextRef.current.close();
               }
@@ -292,13 +303,18 @@
           const playSong = async (sheet) => {
             stopPlayback();
             
-            // Resume AudioContext if suspended
-            if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
-              try {
-                await audioContextRef.current.resume();
-                console.log('AudioContext resumed 😹');
-              } catch (e) {
-                console.error('Failed to resume AudioContext 💔', e);
+            // Force resume AudioContext
+            if (audioContextRef.current) {
+              console.log('AudioContext state before play:', audioContextRef.current.state);
+              if (audioContextRef.current.state !== 'running') {
+                try {
+                  await audioContextRef.current.resume();
+                  console.log('AudioContext resumed! State:', audioContextRef.current.state);
+                } catch (e) {
+                  console.error('Failed to resume AudioContext 💔', e);
+                  alert('Audio ga bisa jalan! Coba klik piano key dulu terus play lagi 🥀');
+                  return;
+                }
               }
             }
             
@@ -322,12 +338,17 @@
               const key = allKeys.find(k => k.note === item.note);
               const timeout = setTimeout(() => {
                 if (key) {
-                  console.log('Playing:', item.note, key.freq);
+                  console.log('Playing note:', item.note, 'freq:', key.freq, 'duration:', item.duration);
                   playNote(key.freq, item.duration);
                   setActiveKey(item.note);
                   setTimeout(() => setActiveKey(null), item.duration);
+                } else {
+                  console.log('Note not found:', item.note);
                 }
-                if (i === songNotes.length - 1) setIsPlaying(false);
+                if (i === songNotes.length - 1) {
+                  console.log('Song finished 😹');
+                  setIsPlaying(false);
+                }
               }, delay);
               
               timeoutsRef.current.push(timeout);
