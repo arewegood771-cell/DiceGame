@@ -336,13 +336,34 @@
           };
 
           const handlePlay = async () => {
+            console.log('Play button clicked 😹');
+            console.log('Selected song:', selectedSong);
+            console.log('Custom sheet:', customSheet);
+            console.log('Saved sheets:', savedSheets);
+            
             // Resume AudioContext if suspended
-            if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
-              await audioContextRef.current.resume();
+            if (audioContextRef.current) {
+              console.log('AudioContext state:', audioContextRef.current.state);
+              if (audioContextRef.current.state === 'suspended') {
+                try {
+                  await audioContextRef.current.resume();
+                  console.log('AudioContext resumed! 😹');
+                } catch (e) {
+                  console.error('Failed to resume 💔', e);
+                  alert('Audio gagal start! Coba klik piano key dulu 🥀');
+                  return;
+                }
+              }
+            } else {
+              console.error('AudioContext tidak ada! 💔');
+              alert('Audio belum ready! Refresh page ya 🥀');
+              return;
             }
             
             const sheet = selectedSong && savedSheets[selectedSong] ? savedSheets[selectedSong] : customSheet;
-            if (sheet) {
+            console.log('Sheet to play:', sheet);
+            
+            if (sheet && sheet.trim()) {
               playSong(sheet);
             } else {
               alert('Masukin sheet dulu dong! 😹');
@@ -350,11 +371,19 @@
           };
 
           const handleVirtualPianoConvert = () => {
+            console.log('Converting Virtual Piano input 😹');
             if (virtualPianoInput.trim()) {
               const converted = convertVirtualPiano(virtualPianoInput);
+              console.log('Converted result:', converted);
               setCustomSheet(converted);
               setSelectedSong('');
-              alert('Converted! Udah siap dipake 😹');
+              if (converted && converted.trim()) {
+                alert('Converted! Udah siap dipake 😹\n\nHasil: ' + converted.substring(0, 100) + '...');
+              } else {
+                alert('Conversion gagal! Format mungkin salah 💔');
+              }
+            } else {
+              alert('Input kosong bro! 🥀');
             }
           };
 
