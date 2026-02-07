@@ -15,116 +15,110 @@
         }
 
         :root {
-            --primary-pink: #ff69b4;
-            --hot-pink: #ff1493;
-            --sakura-pink: #ffb7d5;
-            --lavender: #e6b3ff;
-            --mint: #b3ffcc;
-            --peach: #ffcba4;
-            --sky-blue: #87ceeb;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
             --white: #ffffff;
-            --light-bg: #fff0f7;
-            --card-bg: #fff5fa;
-            --text-dark: #4a2c3e;
-            --shadow: rgba(255, 105, 180, 0.3);
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
         }
 
         body {
             font-family: 'M PLUS Rounded 1c', 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #fff0f7 0%, #ffe6f0 50%, #ffd6e8 100%);
+            background: var(--light-bg);
             color: var(--text-dark);
             min-height: 100vh;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                radial-gradient(circle, var(--sakura-pink) 2px, transparent 2px),
-                radial-gradient(circle, var(--lavender) 1px, transparent 1px);
-            background-size: 100px 100px, 50px 50px;
-            background-position: 0 0, 25px 25px;
-            opacity: 0.3;
-            animation: drift 60s linear infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes drift {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(50px, 50px) rotate(360deg); }
         }
 
         header {
             text-align: center;
             padding: 3rem 2rem 2rem;
+            background: white;
+            border-bottom: 1px solid var(--border);
             position: relative;
-            z-index: 10;
-            animation: bounceIn 1s ease-out;
         }
 
-        @keyframes bounceIn {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
+        .settings-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.8rem 1.2rem;
+            background: var(--light-bg);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .settings-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             font-size: 3.5rem;
-            background: linear-gradient(45deg, var(--hot-pink), var(--lavender), var(--mint));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary);
             margin-bottom: 0.5rem;
-            animation: rainbow 5s ease infinite;
-            background-size: 200% 200%;
-        }
-
-        @keyframes rainbow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
         }
 
         .tagline {
             font-family: 'Quicksand', sans-serif;
             font-size: 1.2rem;
-            color: var(--hot-pink);
-            font-weight: 700;
+            color: var(--text-light);
+            font-weight: 600;
             letter-spacing: 2px;
         }
 
-        .stats {
+        .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-top: 1rem;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            background: white;
+            border-bottom: 2px solid var(--border);
             flex-wrap: wrap;
         }
 
-        .stat-item {
+        .nav-tab {
+            padding: 0.8rem 2rem;
+            border: 2px solid var(--border);
             background: var(--white);
-            padding: 1rem 2rem;
-            border-radius: 20px;
-            border: 2px solid var(--sakura-pink);
-            box-shadow: 0 4px 15px var(--shadow);
+            color: var(--text-dark);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-size: 1rem;
         }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--hot-pink);
-            font-family: 'Archivo Black', sans-serif;
+        .nav-tab:hover {
+            background: var(--light-bg);
+            border-color: var(--primary-light);
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--lavender);
-            font-weight: 600;
+        .nav-tab.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .controls {
@@ -135,10 +129,9 @@
             flex-wrap: wrap;
             position: sticky;
             top: 0;
-            background: rgba(255, 240, 247, 0.95);
-            backdrop-filter: blur(10px);
+            background: white;
             z-index: 100;
-            border-bottom: 2px solid var(--sakura-pink);
+            border-bottom: 1px solid var(--border);
         }
 
         .search-box {
@@ -151,8 +144,8 @@
         .search-input {
             flex: 1;
             padding: 1rem 1.5rem;
-            border: 3px solid var(--sakura-pink);
-            border-radius: 50px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
             font-size: 1rem;
             font-family: 'Quicksand', sans-serif;
             outline: none;
@@ -160,8 +153,8 @@
         }
 
         .search-input:focus {
-            border-color: var(--hot-pink);
-            box-shadow: 0 0 20px var(--shadow);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
 
         .filter-group {
@@ -173,29 +166,31 @@
 
         .filter-btn {
             padding: 0.8rem 1.5rem;
-            border: 2px solid var(--lavender);
+            border: 2px solid var(--border);
             background: var(--white);
-            color: var(--lavender);
-            border-radius: 25px;
+            color: var(--text-dark);
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 700;
+            font-weight: 600;
             transition: all 0.3s ease;
             font-family: 'M PLUS Rounded 1c', sans-serif;
         }
 
-        .filter-btn:hover, .filter-btn.active {
-            background: linear-gradient(135deg, var(--lavender), var(--sakura-pink));
+        .filter-btn:hover {
+            background: var(--light-bg);
+            border-color: var(--primary-light);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
             color: var(--white);
-            border-color: var(--hot-pink);
-            transform: translateY(-2px);
+            border-color: var(--primary);
         }
 
         .container {
             max-width: 1600px;
             margin: 0 auto;
             padding: 2rem;
-            position: relative;
-            z-index: 10;
         }
 
         .waifu-grid {
@@ -207,45 +202,32 @@
 
         .waifu-card {
             background: var(--white);
-            border-radius: 20px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 30px var(--shadow);
-            transition: all 0.4s ease;
-            border: 3px solid var(--sakura-pink);
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
             cursor: pointer;
-            animation: cardAppear 0.5s ease-out backwards;
-        }
-
-        @keyframes cardAppear {
-            from {
-                opacity: 0;
-                transform: scale(0.8) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
         }
 
         .waifu-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 50px var(--shadow);
-            border-color: var(--hot-pink);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px var(--shadow);
+            border-color: var(--primary);
         }
 
         .waifu-image {
             width: 100%;
-            height: 280px;
-            background: linear-gradient(135deg, var(--sakura-pink), var(--lavender), var(--mint));
-            background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite;
+            height: 320px;
             position: relative;
             overflow: hidden;
+            background: var(--light-bg);
         }
 
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        .waifu-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .waifu-image::after {
@@ -258,16 +240,6 @@
             background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
         }
 
-        .waifu-placeholder {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 4rem;
-            color: rgba(255, 255, 255, 0.8);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
         .waifu-info {
             padding: 1.5rem;
         }
@@ -275,38 +247,35 @@
         .waifu-name {
             font-family: 'Archivo Black', sans-serif;
             font-size: 1.3rem;
-            color: var(--hot-pink);
+            color: var(--primary);
             margin-bottom: 0.5rem;
         }
 
         .waifu-anime {
             font-size: 0.95rem;
-            color: var(--lavender);
+            color: var(--text-light);
             font-weight: 700;
             margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .mal-link {
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            padding: 0.4rem 0.8rem;
-            background: linear-gradient(135deg, #2e51a2, #4c6ef5);
+            padding: 0.6rem 1rem;
+            background: var(--primary);
             color: white;
             text-decoration: none;
-            border-radius: 15px;
-            font-size: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
             font-weight: 700;
             transition: all 0.3s ease;
             margin-top: 0.8rem;
         }
 
         .mal-link:hover {
+            background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(46, 81, 162, 0.4);
         }
 
         .waifu-details {
@@ -321,16 +290,127 @@
             justify-content: space-between;
             padding: 0.4rem;
             background: var(--light-bg);
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
         .detail-label {
             font-weight: 700;
-            color: var(--hot-pink);
+            color: var(--text-dark);
         }
 
         .detail-value {
-            color: var(--text-dark);
+            color: var(--text-light);
+        }
+
+        /* Random Waifu Section */
+        .random-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            text-align: center;
+        }
+
+        .random-btn {
+            padding: 1.5rem 3rem;
+            font-size: 1.3rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+
+        .random-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .random-result {
+            margin-top: 3rem;
+        }
+
+        /* Recognizer Section */
+        .recognizer-container {
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+
+        .upload-area {
+            border: 3px dashed var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary);
+            background: var(--light-bg);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .preview-container {
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .recognition-results {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .confidence-bar {
+            height: 8px;
+            background: var(--light-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.5s ease;
         }
 
         .modal {
@@ -340,11 +420,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.3s ease;
             overflow-y: auto;
             padding: 2rem;
         }
@@ -353,27 +432,16 @@
             display: flex;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .modal-content {
             background: var(--white);
-            border-radius: 30px;
+            border-radius: 16px;
             padding: 3rem;
             max-width: 800px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            animation: slideUp 0.4s ease;
-            border: 5px solid var(--hot-pink);
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            border: 1px solid var(--border);
         }
 
         .modal-content::-webkit-scrollbar {
@@ -386,7 +454,7 @@
         }
 
         .modal-content::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--hot-pink), var(--lavender));
+            background: var(--primary);
             border-radius: 10px;
         }
 
@@ -396,7 +464,7 @@
             right: 1rem;
             font-size: 2rem;
             cursor: pointer;
-            color: var(--hot-pink);
+            color: var(--text-light);
             background: var(--light-bg);
             width: 40px;
             height: 40px;
@@ -406,12 +474,13 @@
             justify-content: center;
             transition: all 0.3s ease;
             z-index: 10;
+            border: 1px solid var(--border);
         }
 
         .close-modal:hover {
-            background: var(--hot-pink);
+            background: var(--primary);
             color: var(--white);
-            transform: rotate(90deg);
+            border-color: var(--primary);
         }
 
         .modal-header {
@@ -419,29 +488,37 @@
             margin-bottom: 2rem;
         }
 
+        .modal-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
         .modal-name {
             font-family: 'Pacifico', cursive;
             font-size: 2.5rem;
-            color: var(--hot-pink);
+            color: var(--primary);
             margin-bottom: 0.5rem;
         }
 
         .modal-anime {
             font-size: 1.2rem;
-            color: var(--lavender);
+            color: var(--text-light);
             font-weight: 700;
         }
 
         .info-section {
-            background: linear-gradient(135deg, var(--light-bg), var(--card-bg));
+            background: var(--light-bg);
             padding: 1.5rem;
-            border-radius: 20px;
+            border-radius: 12px;
             margin-bottom: 1.5rem;
-            border: 2px solid var(--sakura-pink);
+            border: 1px solid var(--border);
         }
 
         .info-title {
-            color: var(--hot-pink);
+            color: var(--primary);
             font-size: 1.3rem;
             margin-bottom: 1rem;
             font-family: 'Archivo Black', sans-serif;
@@ -458,14 +535,15 @@
             justify-content: space-between;
             padding: 0.6rem;
             background: var(--white);
-            border-radius: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
         }
 
         .no-results {
             text-align: center;
             padding: 4rem 2rem;
             font-size: 1.5rem;
-            color: var(--hot-pink);
+            color: var(--text-light);
             grid-column: 1 / -1;
         }
 
@@ -473,8 +551,69 @@
             text-align: center;
             padding: 2rem;
             font-size: 1.2rem;
-            color: var(--hot-pink);
+            color: var(--primary);
             font-weight: 700;
+        }
+
+        /* Settings Modal */
+        .settings-modal {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .settings-header {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-family: 'Archivo Black', sans-serif;
+        }
+
+        .settings-section {
+            margin-bottom: 2rem;
+        }
+
+        .settings-label {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .language-select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Quicksand', sans-serif;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .save-settings-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-settings-btn:hover {
+            background: var(--primary-dark);
         }
 
         @media (max-width: 768px) {
@@ -493,44 +632,108 @@
             .modal-content {
                 padding: 2rem;
             }
+
+            .nav-tabs {
+                gap: 0.5rem;
+            }
+
+            .nav-tab {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .settings-btn {
+                top: 0.5rem;
+                right: 0.5rem;
+                padding: 0.5rem 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Waifu Database</h1>
-        <p class="tagline">ULTIMATE ANIME CHARACTER COLLECTION</p>
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-number" id="totalWaifus">132</div>
-                <div class="stat-label">Characters</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="totalAnime">50+</div>
-                <div class="stat-label">Anime Series</div>
-            </div>
-        </div>
+        <button class="settings-btn" onclick="openSettings()">⚙️</button>
+        <h1 id="headerTitle">Waifu Database</h1>
+        <p class="tagline" id="headerTagline">ULTIMATE ANIME CHARACTER COLLECTION</p>
     </header>
 
-    <div class="controls">
-        <div class="search-box">
-            <input type="text" class="search-input" id="searchInput" placeholder="Search by character name or anime...">
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab('browse')" id="tabBrowse">Browse All</button>
+        <button class="nav-tab" onclick="switchTab('random')" id="tabRandom">Random Character</button>
+        <button class="nav-tab" onclick="switchTab('recognizer')" id="tabRecognizer">Character Recognizer</button>
+    </div>
+
+    <!-- Browse Tab -->
+    <div id="browseTab" class="tab-content active">
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search by character name or anime...">
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all" id="filterAll">All</button>
+                <button class="filter-btn" data-filter="action" id="filterAction">Action</button>
+                <button class="filter-btn" data-filter="romance" id="filterRomance">Romance</button>
+                <button class="filter-btn" data-filter="fantasy" id="filterFantasy">Fantasy</button>
+            </div>
         </div>
-        <div class="filter-group">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="action">Action</button>
-            <button class="filter-btn" data-filter="romance">Romance</button>
-            <button class="filter-btn" data-filter="fantasy">Fantasy</button>
-            <button class="filter-btn" data-filter="slice-of-life">Slice of Life</button>
+
+        <div class="container">
+            <div class="waifu-grid" id="waifuGrid">
+                <div class="loading" id="loadingText">Loading characters...</div>
+            </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="waifu-grid" id="waifuGrid">
-            <div class="loading">Loading characters...</div>
+    <!-- Random Tab -->
+    <div id="randomTab" class="tab-content">
+        <div class="container">
+            <div class="random-container">
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: var(--primary);" id="randomTitle">Discover Your Random Character!</h2>
+                <button class="random-btn" onclick="generateRandom()" id="randomButton">Generate Random Character</button>
+                <div class="random-result" id="randomResult"></div>
+            </div>
         </div>
     </div>
 
+    <!-- Recognizer Tab -->
+    <div id="recognizerTab" class="tab-content">
+        <div class="container">
+            <div class="recognizer-container">
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; text-align: center; color: var(--primary);" id="recognizerTitle">Character Recognizer</h2>
+                <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📤</div>
+                    <h3 id="uploadTitle">Upload Character Image</h3>
+                    <p style="color: var(--text-light); margin-top: 1rem;" id="uploadDesc">Click to upload or drag and drop</p>
+                    <input type="file" id="fileInput" accept="image/*" onchange="handleImageUpload(event)">
+                </div>
+                <div class="preview-container" id="previewContainer">
+                    <img id="previewImage" class="preview-image">
+                    <button class="random-btn" onclick="recognizeCharacter()" style="font-size: 1rem; padding: 1rem 2rem;" id="recognizeButton">Recognize Character</button>
+                </div>
+                <div id="recognitionResults"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="settings-modal">
+            <h2 class="settings-header" id="settingsHeader">Settings</h2>
+            
+            <div class="settings-section">
+                <label class="settings-label" id="languageLabel">Language / Bahasa</label>
+                <select class="language-select" id="languageSelect" onchange="changeLanguage()">
+                    <option value="en">English</option>
+                    <option value="id">Bahasa Indonesia</option>
+                    <option value="jp">日本語 (Japanese)</option>
+                </select>
+            </div>
+
+            <button class="save-settings-btn" onclick="closeSettings()" id="closeSettingsBtn">Close</button>
+        </div>
+    </div>
+
+    <!-- Character Modal -->
     <div class="modal" id="waifuModal">
         <div class="modal-content" id="modalContent">
             <span class="close-modal" onclick="closeModal()">×</span>
@@ -538,304 +741,304 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        // Comprehensive Waifu Database
-        const waifuDatabase = [
-            // The database will be populated below
-        ];
+        // Translations
+        const translations = {
+            en: {
+                headerTitle: "Waifu Database",
+                headerTagline: "ULTIMATE ANIME CHARACTER COLLECTION",
+                tabBrowse: "Browse All",
+                tabRandom: "Random Character",
+                tabRecognizer: "Character Recognizer",
+                searchPlaceholder: "Search by character name or anime...",
+                filterAll: "All",
+                filterAction: "Action",
+                filterRomance: "Romance",
+                filterFantasy: "Fantasy",
+                loadingText: "Loading characters...",
+                randomTitle: "Discover Your Random Character!",
+                randomButton: "Generate Random Character",
+                recognizerTitle: "Character Recognizer",
+                uploadTitle: "Upload Character Image",
+                uploadDesc: "Click to upload or drag and drop",
+                recognizeButton: "Recognize Character",
+                settingsHeader: "Settings",
+                languageLabel: "Language",
+                closeSettingsBtn: "Close",
+                hair: "Hair",
+                eyes: "Eyes",
+                age: "Age",
+                height: "Height",
+                role: "Role",
+                malLink: "View on MyAnimeList",
+                basicInfo: "Basic Information",
+                genres: "Genres",
+                about: "About",
+                noResults: "No characters found. Try a different search!",
+                recognitionResults: "Recognition Results",
+                confidence: "Confidence",
+                recognitionNote: "Note: This is a simulated recognition. Click on any result to see full character details."
+            },
+            id: {
+                headerTitle: "Database Waifu",
+                headerTagline: "KOLEKSI KARAKTER ANIME TERLENGKAP",
+                tabBrowse: "Jelajahi Semua",
+                tabRandom: "Karakter Acak",
+                tabRecognizer: "Pengenal Karakter",
+                searchPlaceholder: "Cari berdasarkan nama karakter atau anime...",
+                filterAll: "Semua",
+                filterAction: "Aksi",
+                filterRomance: "Romantis",
+                filterFantasy: "Fantasi",
+                loadingText: "Memuat karakter...",
+                randomTitle: "Temukan Karakter Acakmu!",
+                randomButton: "Buat Karakter Acak",
+                recognizerTitle: "Pengenal Karakter",
+                uploadTitle: "Unggah Gambar Karakter",
+                uploadDesc: "Klik untuk mengunggah atau seret dan lepas",
+                recognizeButton: "Kenali Karakter",
+                settingsHeader: "Pengaturan",
+                languageLabel: "Bahasa",
+                closeSettingsBtn: "Tutup",
+                hair: "Rambut",
+                eyes: "Mata",
+                age: "Umur",
+                height: "Tinggi",
+                role: "Peran",
+                malLink: "Lihat di MyAnimeList",
+                basicInfo: "Informasi Dasar",
+                genres: "Genre",
+                about: "Tentang",
+                noResults: "Karakter tidak ditemukan. Coba pencarian lain!",
+                recognitionResults: "Hasil Pengenalan",
+                confidence: "Kepercayaan",
+                recognitionNote: "Catatan: Ini adalah pengenalan simulasi. Klik hasil mana pun untuk melihat detail karakter lengkap."
+            },
+            jp: {
+                headerTitle: "ワイフデータベース",
+                headerTagline: "究極のアニメキャラクターコレクション",
+                tabBrowse: "すべて閲覧",
+                tabRandom: "ランダムキャラ",
+                tabRecognizer: "キャラ認識",
+                searchPlaceholder: "キャラ名またはアニメで検索...",
+                filterAll: "すべて",
+                filterAction: "アクション",
+                filterRomance: "ロマンス",
+                filterFantasy: "ファンタジー",
+                loadingText: "読み込み中...",
+                randomTitle: "ランダムキャラクターを発見！",
+                randomButton: "ランダム生成",
+                recognizerTitle: "キャラクター認識",
+                uploadTitle: "キャラ画像をアップロード",
+                uploadDesc: "クリックまたはドラッグ＆ドロップ",
+                recognizeButton: "キャラを認識",
+                settingsHeader: "設定",
+                languageLabel: "言語",
+                closeSettingsBtn: "閉じる",
+                hair: "髪",
+                eyes: "目",
+                age: "年齢",
+                height: "身長",
+                role: "役割",
+                malLink: "MyAnimeListで見る",
+                basicInfo: "基本情報",
+                genres: "ジャンル",
+                about: "について",
+                noResults: "キャラクターが見つかりません。別の検索を試してください！",
+                recognitionResults: "認識結果",
+                confidence: "信頼度",
+                recognitionNote: "注：これはシミュレーションです。結果をクリックして詳細を表示します。"
+            }
+        };
 
-        // Initialize database with all waifus
+        // Database (Female only)
+        let allCharacters = [];
+        let filteredCharacters = [];
+        let currentFilter = 'all';
+        let uploadedImage = null;
+        let currentLanguage = 'id';
+
         function initializeDatabase() {
-            return [
-                // Darling in the FranXX
-                {name: "Zero Two", anime: "Darling in the FranXX", malId: 33278, genre: ["action", "romance"], hair: "Pink", eyes: "Cyan", age: "Unknown", height: "170 cm", role: "Protagonist"},
-                
-                // Re:Zero
-                {name: "Rem", anime: "Re:Zero", malId: 31240, genre: ["fantasy", "action"], hair: "Blue", eyes: "Blue", age: "18", height: "154 cm", role: "Main Character"},
-                {name: "Ram", anime: "Re:Zero", malId: 31240, genre: ["fantasy", "action"], hair: "Pink", eyes: "Red", age: "18", height: "154 cm", role: "Main Character"},
-                {name: "Emilia", anime: "Re:Zero", malId: 31240, genre: ["fantasy", "romance"], hair: "Silver", eyes: "Purple", age: "Unknown", height: "164 cm", role: "Main Heroine"},
-                
-                // Spy x Family
-                {name: "Yor Forger", anime: "Spy x Family", malId: 50265, genre: ["action", "comedy"], hair: "Black", eyes: "Red", age: "27", height: "170 cm", role: "Protagonist"},
-                {name: "Anya Forger", anime: "Spy x Family", malId: 50265, genre: ["comedy", "slice-of-life"], hair: "Pink", eyes: "Green", age: "6", height: "99.5 cm", role: "Protagonist"},
-                
-                // Demon Slayer
-                {name: "Nezuko Kamado", anime: "Kimetsu no Yaiba", malId: 38000, genre: ["action", "fantasy"], hair: "Black & Orange", eyes: "Pink", age: "14", height: "153 cm", role: "Deuteragonist"},
-                {name: "Shinobu Kocho", anime: "Kimetsu no Yaiba", malId: 38000, genre: ["action", "fantasy"], hair: "Black to Purple", eyes: "Purple", age: "18", height: "151 cm", role: "Hashira"},
-                {name: "Kanao Tsuyuri", anime: "Kimetsu no Yaiba", malId: 38000, genre: ["action", "fantasy"], hair: "Black", eyes: "Purple", age: "16", height: "156 cm", role: "Demon Slayer"},
-                {name: "Mitsuri Kanroji", anime: "Kimetsu no Yaiba", malId: 38000, genre: ["action", "romance"], hair: "Pink & Green", eyes: "Green", age: "19", height: "167 cm", role: "Hashira"},
-                {name: "Kanae Kocho", anime: "Kimetsu no Yaiba", malId: 38000, genre: ["action", "fantasy"], hair: "Black to Purple", eyes: "Purple", age: "17", height: "Unknown", role: "Former Hashira"},
-                
-                // My Dress-Up Darling
-                {name: "Marin Kitagawa", anime: "Sono Bisque Doll wa Koi wo Suru", malId: 48736, genre: ["romance", "slice-of-life"], hair: "Blonde", eyes: "Pink", age: "15", height: "164 cm", role: "Main Heroine"},
-                
-                // Attack on Titan
-                {name: "Mikasa Ackerman", anime: "Shingeki no Kyojin", malId: 16498, genre: ["action", "fantasy"], hair: "Black", eyes: "Gray", age: "19", height: "170 cm", role: "Deuteragonist"},
-                {name: "Annie Leonhart", anime: "Shingeki no Kyojin", malId: 16498, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Blue", age: "20", height: "153 cm", role: "Antagonist"},
-                {name: "Historia Reiss", anime: "Shingeki no Kyojin", malId: 16498, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Blue", age: "19", height: "145 cm", role: "Main Character"},
-                {name: "Sasha Blouse", anime: "Shingeki no Kyojin", malId: 16498, genre: ["action", "comedy"], hair: "Brown", eyes: "Brown", age: "20", height: "168 cm", role: "Supporting"},
-                {name: "Pieck Finger", anime: "Shingeki no Kyojin", malId: 16498, genre: ["action", "fantasy"], hair: "Black", eyes: "Gray", age: "21", height: "155 cm", role: "Supporting"},
-                
-                // Naruto
-                {name: "Hinata Hyuga", anime: "Naruto Shippuden", malId: 1735, genre: ["action", "romance"], hair: "Dark Blue", eyes: "Lavender", age: "32", height: "163 cm", role: "Main Character"},
-                {name: "Sakura Haruno", anime: "Naruto Shippuden", malId: 1735, genre: ["action", "romance"], hair: "Pink", eyes: "Green", age: "33", height: "165 cm", role: "Main Character"},
-                {name: "Tsunade", anime: "Naruto Shippuden", malId: 1735, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Brown", age: "50+", height: "163 cm", role: "Hokage"},
-                {name: "Temari", anime: "Naruto Shippuden", malId: 1735, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Teal", age: "32", height: "165 cm", role: "Supporting"},
-                {name: "Ino Yamanaka", anime: "Naruto Shippuden", malId: 1735, genre: ["action", "romance"], hair: "Blonde", eyes: "Blue", age: "32", height: "162 cm", role: "Supporting"},
-                
-                // Sword Art Online
-                {name: "Asuna Yuuki", anime: "Sword Art Online", malId: 11757, genre: ["action", "romance"], hair: "Brown", eyes: "Hazel", age: "17", height: "168 cm", role: "Main Heroine"},
-                {name: "Sinon", anime: "Sword Art Online II", malId: 21881, genre: ["action", "fantasy"], hair: "Blue", eyes: "Blue", age: "16", height: "162 cm", role: "Main Character"},
-                {name: "Yui", anime: "Sword Art Online", malId: 11757, genre: ["fantasy", "slice-of-life"], hair: "Black", eyes: "Black", age: "AI", height: "110 cm", role: "Supporting"},
-                {name: "Silica", anime: "Sword Art Online", malId: 11757, genre: ["fantasy", "slice-of-life"], hair: "Red", eyes: "Brown", age: "13", height: "Unknown", role: "Supporting"},
-                {name: "Lisbeth", anime: "Sword Art Online", malId: 11757, genre: ["fantasy", "slice-of-life"], hair: "Pink", eyes: "Pink", age: "17", height: "Unknown", role: "Supporting"},
-                
-                // Bunny Girl Senpai
-                {name: "Mai Sakurajima", anime: "Seishun Buta Yarou", malId: 37450, genre: ["romance", "fantasy"], hair: "Black", eyes: "Purple", age: "17", height: "165 cm", role: "Main Heroine"},
-                {name: "Tomoe Koga", anime: "Seishun Buta Yarou", malId: 37450, genre: ["romance", "slice-of-life"], hair: "Brown", eyes: "Brown", age: "16", height: "Unknown", role: "Supporting"},
-                {name: "Rio Futaba", anime: "Seishun Buta Yarou", malId: 37450, genre: ["romance", "fantasy"], hair: "Black", eyes: "Gray", age: "17", height: "Unknown", role: "Supporting"},
-                {name: "Nodoka Toyohama", anime: "Seishun Buta Yarou", malId: 37450, genre: ["romance", "fantasy"], hair: "Silver", eyes: "Blue", age: "17", height: "Unknown", role: "Supporting"},
-                
-                // High School DxD
-                {name: "Rias Gremory", anime: "High School DxD", malId: 11617, genre: ["action", "romance"], hair: "Crimson Red", eyes: "Blue-Green", age: "18", height: "172 cm", role: "Main Heroine"},
-                {name: "Akeno Himejima", anime: "High School DxD", malId: 11617, genre: ["action", "romance"], hair: "Black", eyes: "Purple", age: "18", height: "168 cm", role: "Main Character"},
-                {name: "Koneko Toujou", anime: "High School DxD", malId: 11617, genre: ["action", "fantasy"], hair: "White", eyes: "Gold", age: "15", height: "138 cm", role: "Main Character"},
-                
-                // Violet Evergarden
-                {name: "Violet Evergarden", anime: "Violet Evergarden", malId: 33352, genre: ["fantasy", "slice-of-life"], hair: "Blonde", eyes: "Blue", age: "14", height: "161 cm", role: "Protagonist"},
-                
-                // Fate Series
-                {name: "Saber", anime: "Fate/stay night", malId: 356, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Green", age: "Unknown", height: "154 cm", role: "Main Heroine"},
-                {name: "Rin Tohsaka", anime: "Fate/stay night", malId: 356, genre: ["action", "fantasy"], hair: "Black", eyes: "Blue", age: "17", height: "159 cm", role: "Main Heroine"},
-                {name: "Sakura Matou", anime: "Fate/stay night", malId: 356, genre: ["action", "fantasy"], hair: "Purple", eyes: "Purple", age: "16", height: "156 cm", role: "Main Heroine"},
-                {name: "Ishtar", anime: "Fate/Grand Order", malId: 34321, genre: ["action", "fantasy"], hair: "Black", eyes: "Red", age: "Unknown", height: "159 cm", role: "Servant"},
-                {name: "Jeanne d'Arc", anime: "Fate/Apocrypha", malId: 31374, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Purple", age: "19", height: "159 cm", role: "Main Character"},
-                
-                // Monogatari Series
-                {name: "Hitagi Senjougahara", anime: "Bakemonogatari", malId: 5081, genre: ["romance", "fantasy"], hair: "Purple", eyes: "Purple", age: "18", height: "165 cm", role: "Main Heroine"},
-                {name: "Shinobu Oshino", anime: "Bakemonogatari", malId: 5081, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Gold", age: "598", height: "140 cm", role: "Main Character"},
-                {name: "Nadeko Sengoku", anime: "Bakemonogatari", malId: 5081, genre: ["romance", "fantasy"], hair: "Black", eyes: "Brown", age: "15", height: "153 cm", role: "Supporting"},
-                
-                // One Piece
-                {name: "Nami", anime: "One Piece", malId: 21, genre: ["action", "adventure"], hair: "Orange", eyes: "Brown", age: "20", height: "170 cm", role: "Main Character"},
-                {name: "Nico Robin", anime: "One Piece", malId: 21, genre: ["action", "adventure"], hair: "Black", eyes: "Blue", age: "30", height: "188 cm", role: "Main Character"},
-                {name: "Boa Hancock", anime: "One Piece", malId: 21, genre: ["action", "romance"], hair: "Black", eyes: "Brown", age: "31", height: "191 cm", role: "Supporting"},
-                {name: "Nefertari Vivi", anime: "One Piece", malId: 21, genre: ["action", "adventure"], hair: "Blue", eyes: "Blue", age: "18", height: "169 cm", role: "Supporting"},
-                
-                // Bleach
-                {name: "Rukia Kuchiki", anime: "Bleach", malId: 269, genre: ["action", "fantasy"], hair: "Black", eyes: "Purple", age: "150+", height: "144 cm", role: "Main Character"},
-                {name: "Orihime Inoue", anime: "Bleach", malId: 269, genre: ["action", "romance"], hair: "Orange", eyes: "Gray", age: "17", height: "157 cm", role: "Main Character"},
-                {name: "Yoruichi Shihouin", anime: "Bleach", malId: 269, genre: ["action", "fantasy"], hair: "Purple", eyes: "Gold", age: "Unknown", height: "156 cm", role: "Supporting"},
-                {name: "Rangiku Matsumoto", anime: "Bleach", malId: 269, genre: ["action", "comedy"], hair: "Blonde", eyes: "Blue", age: "Unknown", height: "172 cm", role: "Supporting"},
-                
-                // My Hero Academia
-                {name: "Ochaco Uraraka", anime: "Boku no Hero Academia", malId: 31964, genre: ["action", "romance"], hair: "Brown", eyes: "Brown", age: "16", height: "156 cm", role: "Main Character"},
-                {name: "Momo Yaoyorozu", anime: "Boku no Hero Academia", malId: 31964, genre: ["action", "slice-of-life"], hair: "Black", eyes: "Black", age: "16", height: "173 cm", role: "Supporting"},
-                {name: "Kyoka Jiro", anime: "Boku no Hero Academia", malId: 31964, genre: ["action", "slice-of-life"], hair: "Purple", eyes: "Black", age: "16", height: "154 cm", role: "Supporting"},
-                {name: "Tsuyu Asui", anime: "Boku no Hero Academia", malId: 31964, genre: ["action", "comedy"], hair: "Green", eyes: "Black", age: "16", height: "150 cm", role: "Supporting"},
-                {name: "Himiko Toga", anime: "Boku no Hero Academia", malId: 31964, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Yellow", age: "17", height: "157 cm", role: "Antagonist"},
-                
-                // Steins;Gate
-                {name: "Kurisu Makise", anime: "Steins;Gate", malId: 9253, genre: ["fantasy", "romance"], hair: "Red", eyes: "Purple", age: "18", height: "160 cm", role: "Main Heroine"},
-                {name: "Mayuri Shiina", anime: "Steins;Gate", malId: 9253, genre: ["fantasy", "slice-of-life"], hair: "Black", eyes: "Blue", age: "16", height: "152 cm", role: "Main Character"},
-                
-                // Konosuba
-                {name: "Aqua", anime: "Kono Subarashii Sekai", malId: 30831, genre: ["comedy", "fantasy"], hair: "Blue", eyes: "Blue", age: "Unknown", height: "157 cm", role: "Main Character"},
-                {name: "Megumin", anime: "Kono Subarashii Sekai", malId: 30831, genre: ["comedy", "fantasy"], hair: "Brown", eyes: "Red", age: "14", height: "Unknown", role: "Main Character"},
-                {name: "Darkness", anime: "Kono Subarashii Sekai", malId: 30831, genre: ["comedy", "fantasy"], hair: "Blonde", eyes: "Blue", age: "18", height: "Unknown", role: "Main Character"},
-                
-                // Love Live
-                {name: "Honoka Kousaka", anime: "Love Live! School Idol Project", malId: 15051, genre: ["slice-of-life", "music"], hair: "Orange", eyes: "Blue", age: "16", height: "157 cm", role: "Protagonist"},
-                {name: "Kotori Minami", anime: "Love Live! School Idol Project", malId: 15051, genre: ["slice-of-life", "music"], hair: "Gray", eyes: "Yellow", age: "16", height: "159 cm", role: "Main Character"},
-                {name: "Umi Sonoda", anime: "Love Live! School Idol Project", malId: 15051, genre: ["slice-of-life", "music"], hair: "Blue", eyes: "Yellow", age: "16", height: "159 cm", role: "Main Character"},
-                
-                // Date A Live
-                {name: "Tohka Yatogami", anime: "Date A Live", malId: 15583, genre: ["action", "romance"], hair: "Purple", eyes: "Purple", age: "Unknown", height: "Unknown", role: "Main Heroine"},
-                {name: "Kurumi Tokisaki", anime: "Date A Live", malId: 15583, genre: ["action", "fantasy"], hair: "Black", eyes: "Red & Gold", age: "Unknown", height: "157 cm", role: "Antagonist"},
-                
-                // The Quintessential Quintuplets
-                {name: "Miku Nakano", anime: "5-toubun no Hanayome", malId: 38101, genre: ["romance", "comedy"], hair: "Brown", eyes: "Blue", age: "17", height: "159 cm", role: "Main Character"},
-                {name: "Nino Nakano", anime: "5-toubun no Hanayome", malId: 38101, genre: ["romance", "comedy"], hair: "Pink", eyes: "Blue", age: "17", height: "159 cm", role: "Main Character"},
-                {name: "Itsuki Nakano", anime: "5-toubun no Hanayome", malId: 38101, genre: ["romance", "comedy"], hair: "Red", eyes: "Green", age: "17", height: "164 cm", role: "Main Character"},
-                {name: "Yotsuba Nakano", anime: "5-toubun no Hanayome", malId: 38101, genre: ["romance", "comedy"], hair: "Orange", eyes: "Green", age: "17", height: "164 cm", role: "Main Character"},
-                {name: "Ichika Nakano", anime: "5-toubun no Hanayome", malId: 38101, genre: ["romance", "comedy"], hair: "Pink", eyes: "Blue", age: "18", height: "159 cm", role: "Main Character"},
-                
-                // Chainsaw Man
-                {name: "Makima", anime: "Chainsaw Man", malId: 44511, genre: ["action", "fantasy"], hair: "Red", eyes: "Yellow", age: "Unknown", height: "Unknown", role: "Antagonist"},
-                {name: "Power", anime: "Chainsaw Man", malId: 44511, genre: ["action", "comedy"], hair: "Blonde", eyes: "Red", age: "Unknown", height: "173 cm", role: "Main Character"},
-                {name: "Himeno", anime: "Chainsaw Man", malId: 44511, genre: ["action", "fantasy"], hair: "Black", eyes: "Blue", age: "Unknown", height: "168 cm", role: "Supporting"},
-                
-                // Jujutsu Kaisen
-                {name: "Nobara Kugisaki", anime: "Jujutsu Kaisen", malId: 40748, genre: ["action", "fantasy"], hair: "Orange", eyes: "Orange", age: "16", height: "160 cm", role: "Main Character"},
-                {name: "Maki Zenin", anime: "Jujutsu Kaisen", malId: 40748, genre: ["action", "fantasy"], hair: "Green", eyes: "Yellow", age: "17", height: "170 cm", role: "Supporting"},
-                {name: "Mei Mei", anime: "Jujutsu Kaisen", malId: 40748, genre: ["action", "fantasy"], hair: "Silver", eyes: "Blue", age: "Unknown", height: "Unknown", role: "Supporting"},
-                
-                // Tokyo Ghoul
-                {name: "Touka Kirishima", anime: "Tokyo Ghoul", malId: 22319, genre: ["action", "fantasy"], hair: "Purple", eyes: "Blue", age: "18", height: "156 cm", role: "Main Heroine"},
-                {name: "Rize Kamishiro", anime: "Tokyo Ghoul", malId: 22319, genre: ["action", "fantasy"], hair: "Purple", eyes: "Purple", age: "18", height: "Unknown", role: "Supporting"},
-                
-                // Fullmetal Alchemist
-                {name: "Riza Hawkeye", anime: "Fullmetal Alchemist: Brotherhood", malId: 5114, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Brown", age: "25", height: "168 cm", role: "Main Character"},
-                {name: "Winry Rockbell", anime: "Fullmetal Alchemist: Brotherhood", malId: 5114, genre: ["action", "slice-of-life"], hair: "Blonde", eyes: "Blue", age: "16", height: "163 cm", role: "Main Character"},
-                
-                // Code Geass
-                {name: "C.C.", anime: "Code Geass", malId: 1575, genre: ["action", "fantasy"], hair: "Green", eyes: "Gold", age: "Unknown", height: "168 cm", role: "Main Heroine"},
-                {name: "Kallen Stadtfeld", anime: "Code Geass", malId: 1575, genre: ["action", "romance"], hair: "Red", eyes: "Blue", age: "17", height: "171 cm", role: "Main Character"},
-                
-                // Angel Beats
-                {name: "Kanade Tachibana", anime: "Angel Beats!", malId: 6547, genre: ["fantasy", "slice-of-life"], hair: "Silver", eyes: "Yellow", age: "Unknown", height: "150 cm", role: "Main Heroine"},
-                {name: "Yuri Nakamura", anime: "Angel Beats!", malId: 6547, genre: ["action", "fantasy"], hair: "Purple", eyes: "Green", age: "Unknown", height: "Unknown", role: "Protagonist"},
-                
-                // Toradora
-                {name: "Taiga Aisaka", anime: "Toradora!", malId: 4224, genre: ["romance", "comedy"], hair: "Brown", eyes: "Brown", age: "17", height: "143 cm", role: "Main Heroine"},
-                {name: "Minori Kushieda", anime: "Toradora!", malId: 4224, genre: ["romance", "slice-of-life"], hair: "Brown", eyes: "Brown", age: "17", height: "158 cm", role: "Supporting"},
-                {name: "Ami Kawashima", anime: "Toradora!", malId: 4224, genre: ["romance", "comedy"], hair: "Blue", eyes: "Blue", age: "17", height: "163 cm", role: "Supporting"},
-                
-                // K-On!
-                {name: "Yui Hirasawa", anime: "K-On!", malId: 5680, genre: ["slice-of-life", "music"], hair: "Brown", eyes: "Brown", age: "17", height: "156 cm", role: "Protagonist"},
-                {name: "Mio Akiyama", anime: "K-On!", malId: 5680, genre: ["slice-of-life", "music"], hair: "Black", eyes: "Gray", age: "17", height: "160 cm", role: "Main Character"},
-                {name: "Azusa Nakano", anime: "K-On!", malId: 5680, genre: ["slice-of-life", "music"], hair: "Black", eyes: "Brown", age: "16", height: "150 cm", role: "Main Character"},
-                
-                // Clannad
-                {name: "Nagisa Furukawa", anime: "Clannad", malId: 2167, genre: ["romance", "slice-of-life"], hair: "Brown", eyes: "Brown", age: "18", height: "155 cm", role: "Main Heroine"},
-                {name: "Kyou Fujibayashi", anime: "Clannad", malId: 2167, genre: ["romance", "comedy"], hair: "Purple", eyes: "Purple", age: "18", height: "158 cm", role: "Supporting"},
-                {name: "Tomoyo Sakagami", anime: "Clannad", malId: 2167, genre: ["romance", "action"], hair: "Silver", eyes: "Gray", age: "17", height: "161 cm", role: "Supporting"},
-                
-                // Nisekoi
-                {name: "Chitoge Kirisaki", anime: "Nisekoi", malId: 18897, genre: ["romance", "comedy"], hair: "Blonde", eyes: "Blue", age: "16", height: "160 cm", role: "Main Heroine"},
-                {name: "Kosaki Onodera", anime: "Nisekoi", malId: 18897, genre: ["romance", "slice-of-life"], hair: "Brown", eyes: "Brown", age: "16", height: "157 cm", role: "Main Character"},
-                
-                // No Game No Life
-                {name: "Shiro", anime: "No Game No Life", malId: 19815, genre: ["fantasy", "comedy"], hair: "White", eyes: "Red", age: "11", height: "Unknown", role: "Protagonist"},
-                {name: "Jibril", anime: "No Game No Life", malId: 19815, genre: ["fantasy", "action"], hair: "Pink", eyes: "Gold", age: "6000+", height: "Unknown", role: "Supporting"},
-                
-                // Overlord
-                {name: "Albedo", anime: "Overlord", malId: 29803, genre: ["fantasy", "action"], hair: "Black", eyes: "Yellow", age: "Unknown", height: "Unknown", role: "Main Character"},
-                {name: "Shalltear Bloodfallen", anime: "Overlord", malId: 29803, genre: ["fantasy", "action"], hair: "Silver", eyes: "Red", age: "Unknown", height: "140 cm", role: "Main Character"},
-                
-                // Evangelion
-                {name: "Rei Ayanami", anime: "Neon Genesis Evangelion", malId: 30, genre: ["action", "fantasy"], hair: "Blue", eyes: "Red", age: "14", height: "158 cm", role: "Main Heroine"},
-                {name: "Asuka Langley Soryu", anime: "Neon Genesis Evangelion", malId: 30, genre: ["action", "romance"], hair: "Red", eyes: "Blue", age: "14", height: "157 cm", role: "Main Heroine"},
-                
-                // Death Note
-                {name: "Misa Amane", anime: "Death Note", malId: 1535, genre: ["fantasy", "romance"], hair: "Blonde", eyes: "Brown", age: "19", height: "152 cm", role: "Main Character"},
-                
-                // Dragon Ball
-                {name: "Bulma", anime: "Dragon Ball Z", malId: 813, genre: ["action", "adventure"], hair: "Blue", eyes: "Blue", age: "47", height: "165 cm", role: "Main Character"},
-                {name: "Android 18", anime: "Dragon Ball Z", malId: 813, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Blue", age: "Unknown", height: "169 cm", role: "Supporting"},
-                
-                // Fairy Tail
-                {name: "Lucy Heartfilia", anime: "Fairy Tail", malId: 6702, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Brown", age: "19", height: "165 cm", role: "Protagonist"},
-                {name: "Erza Scarlet", anime: "Fairy Tail", malId: 6702, genre: ["action", "fantasy"], hair: "Red", eyes: "Brown", age: "21", height: "165 cm", role: "Main Character"},
-                {name: "Wendy Marvell", anime: "Fairy Tail", malId: 6702, genre: ["fantasy", "slice-of-life"], hair: "Blue", eyes: "Brown", age: "14", height: "Unknown", role: "Main Character"},
-                
-                // One Punch Man
-                {name: "Fubuki", anime: "One Punch Man", malId: 30276, genre: ["action", "comedy"], hair: "Green", eyes: "Green", age: "23", height: "167 cm", role: "Supporting"},
-                {name: "Tatsumaki", anime: "One Punch Man", malId: 30276, genre: ["action", "fantasy"], hair: "Green", eyes: "Green", age: "28", height: "150 cm", role: "Supporting"},
-                
-                // Rent-a-Girlfriend
-                {name: "Chizuru Mizuhara", anime: "Kanojo, Okarishimasu", malId: 40839, genre: ["romance", "comedy"], hair: "Black", eyes: "Brown", age: "20", height: "161 cm", role: "Main Heroine"},
-                {name: "Mami Nanami", anime: "Kanojo, Okarishimasu", malId: 40839, genre: ["romance", "comedy"], hair: "Blonde", eyes: "Brown", age: "20", height: "Unknown", role: "Supporting"},
-                
-                // Kaguya-sama
-                {name: "Kaguya Shinomiya", anime: "Kaguya-sama wa Kokurasetai", malId: 37999, genre: ["romance", "comedy"], hair: "Black", eyes: "Red", age: "17", height: "158 cm", role: "Protagonist"},
-                {name: "Chika Fujiwara", anime: "Kaguya-sama wa Kokurasetai", malId: 37999, genre: ["comedy", "slice-of-life"], hair: "Pink", eyes: "Blue", age: "16", height: "154 cm", role: "Main Character"},
-                {name: "Ai Hayasaka", anime: "Kaguya-sama wa Kokurasetai", malId: 37999, genre: ["romance", "comedy"], hair: "Blonde", eyes: "Blue", age: "17", height: "159 cm", role: "Supporting"},
-                
-                // Horimiya
-                {name: "Kyouko Hori", anime: "Horimiya", malId: 42897, genre: ["romance", "slice-of-life"], hair: "Brown", eyes: "Brown", age: "17", height: "163 cm", role: "Protagonist"},
-                {name: "Yuki Yoshikawa", anime: "Horimiya", malId: 42897, genre: ["romance", "comedy"], hair: "Brown", eyes: "Brown", age: "17", height: "Unknown", role: "Supporting"},
-                
-                // Your Lie in April
-                {name: "Kaori Miyazono", anime: "Shigatsu wa Kimi no Uso", malId: 23273, genre: ["romance", "music"], hair: "Blonde", eyes: "Blue", age: "14", height: "Unknown", role: "Main Heroine"},
-                
-                // Weathering With You
-                {name: "Hina Amano", anime: "Tenki no Ko", malId: 38826, genre: ["romance", "fantasy"], hair: "Brown", eyes: "Brown", age: "16", height: "Unknown", role: "Main Heroine"},
-                
-                // Your Name
-                {name: "Mitsuha Miyamizu", anime: "Kimi no Na wa.", malId: 32281, genre: ["romance", "fantasy"], hair: "Black", eyes: "Brown", age: "17", height: "158 cm", role: "Protagonist"},
-                
-                // Fire Force
-                {name: "Maki Oze", anime: "Enen no Shouboutai", malId: 38671, genre: ["action", "fantasy"], hair: "Black", eyes: "Gold", age: "19", height: "167 cm", role: "Main Character"},
-                {name: "Tamaki Kotatsu", anime: "Enen no Shouboutai", malId: 38671, genre: ["action", "comedy"], hair: "Pink", eyes: "Gold", age: "17", height: "161 cm", role: "Main Character"},
-                
-                // Black Clover
-                {name: "Noelle Silva", anime: "Black Clover", malId: 34572, genre: ["action", "fantasy"], hair: "Silver", eyes: "Pink", age: "17", height: "153 cm", role: "Main Heroine"},
-                {name: "Mimosa Vermillion", anime: "Black Clover", malId: 34572, genre: ["action", "romance"], hair: "Orange", eyes: "Gold", age: "17", height: "162 cm", role: "Supporting"},
-                
-                // Dr. Stone
-                {name: "Kohaku", anime: "Dr. Stone", malId: 38691, genre: ["action", "adventure"], hair: "Blonde", eyes: "Blue", age: "16", height: "160 cm", role: "Main Heroine"},
-                
-                // Slime
-                {name: "Shizu", anime: "Tensei shitara Slime Datta Ken", malId: 37430, genre: ["fantasy", "action"], hair: "Black", eyes: "Red", age: "Unknown", height: "Unknown", role: "Supporting"},
-                {name: "Shion", anime: "Tensei shitara Slime Datta Ken", malId: 37430, genre: ["fantasy", "action"], hair: "Purple", eyes: "Purple", age: "Unknown", height: "180 cm", role: "Main Character"},
-                
-                // Mushoku Tensei
-                {name: "Roxy Migurdia", anime: "Mushoku Tensei", malId: 39535, genre: ["fantasy", "romance"], hair: "Blue", eyes: "Blue", age: "44", height: "140 cm", role: "Main Character"},
-                {name: "Eris Boreas Greyrat", anime: "Mushoku Tensei", malId: 39535, genre: ["action", "romance"], hair: "Red", eyes: "Green", age: "15", height: "Unknown", role: "Main Character"},
-                {name: "Sylphiette", anime: "Mushoku Tensei", malId: 39535, genre: ["fantasy", "romance"], hair: "White", eyes: "Green", age: "15", height: "Unknown", role: "Main Character"},
-                
-                // Frieren
-                {name: "Frieren", anime: "Sousou no Frieren", malId: 52991, genre: ["fantasy", "adventure"], hair: "White", eyes: "Green", age: "1000+", height: "Unknown", role: "Protagonist"},
-                {name: "Fern", anime: "Sousou no Frieren", malId: 52991, genre: ["fantasy", "adventure"], hair: "Purple", eyes: "Purple", age: "18", height: "Unknown", role: "Main Character"},
+            const characters = [
+                {name: "Zero Two", anime: "Darling in the FranXX", malId: 33278, genre: ["action", "romance"], hair: "Pink", eyes: "Cyan", age: "Unknown", height: "170 cm", role: "Protagonist", image: "https://cdn.myanimelist.net/images/characters/13/362441.jpg"},
+                {name: "Rem", anime: "Re:Zero", malId: 31240, genre: ["fantasy", "action"], hair: "Blue", eyes: "Blue", age: "18", height: "154 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/9/304495.jpg"},
+                {name: "Ram", anime: "Re:Zero", malId: 31240, genre: ["fantasy", "action"], hair: "Pink", eyes: "Red", age: "18", height: "154 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/6/304496.jpg"},
+                {name: "Emilia", anime: "Re:Zero", malId: 31240, genre: ["fantasy", "romance"], hair: "Silver", eyes: "Purple", age: "Unknown", height: "164 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/11/361977.jpg"},
+                {name: "Yor Forger", anime: "Spy x Family", malId: 50265, genre: ["action", "comedy"], hair: "Black", eyes: "Red", age: "27", height: "170 cm", role: "Protagonist", image: "https://cdn.myanimelist.net/images/characters/11/457609.jpg"},
+                {name: "Anya Forger", anime: "Spy x Family", malId: 50265, genre: ["comedy", "slice-of-life"], hair: "Pink", eyes: "Green", age: "6", height: "99.5 cm", role: "Protagonist", image: "https://cdn.myanimelist.net/images/characters/10/465952.jpg"},
+                {name: "Nezuko Kamado", anime: "Kimetsu no Yaiba", malId: 38000, genre: ["action", "fantasy"], hair: "Black & Orange", eyes: "Pink", age: "14", height: "153 cm", role: "Deuteragonist", image: "https://cdn.myanimelist.net/images/characters/3/394913.jpg"},
+                {name: "Shinobu Kocho", anime: "Kimetsu no Yaiba", malId: 38000, genre: ["action", "fantasy"], hair: "Black to Purple", eyes: "Purple", age: "18", height: "151 cm", role: "Hashira", image: "https://cdn.myanimelist.net/images/characters/11/375465.jpg"},
+                {name: "Mitsuri Kanroji", anime: "Kimetsu no Yaiba", malId: 38000, genre: ["action", "romance"], hair: "Pink & Green", eyes: "Green", age: "19", height: "167 cm", role: "Hashira", image: "https://cdn.myanimelist.net/images/characters/14/407467.jpg"},
+                {name: "Marin Kitagawa", anime: "Sono Bisque Doll wa Koi wo Suru", malId: 48736, genre: ["romance", "slice-of-life"], hair: "Blonde", eyes: "Pink", age: "15", height: "164 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/4/457352.jpg"},
+                {name: "Mikasa Ackerman", anime: "Shingeki no Kyojin", malId: 16498, genre: ["action", "fantasy"], hair: "Black", eyes: "Gray", age: "19", height: "170 cm", role: "Deuteragonist", image: "https://cdn.myanimelist.net/images/characters/9/215563.jpg"},
+                {name: "Annie Leonhart", anime: "Shingeki no Kyojin", malId: 16498, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Blue", age: "20", height: "153 cm", role: "Antagonist", image: "https://cdn.myanimelist.net/images/characters/9/217391.jpg"},
+                {name: "Historia Reiss", anime: "Shingeki no Kyojin", malId: 16498, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Blue", age: "19", height: "145 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/5/373803.jpg"},
+                {name: "Hinata Hyuga", anime: "Naruto Shippuden", malId: 1735, genre: ["action", "romance"], hair: "Dark Blue", eyes: "Lavender", age: "32", height: "163 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/4/305047.jpg"},
+                {name: "Sakura Haruno", anime: "Naruto Shippuden", malId: 1735, genre: ["action", "romance"], hair: "Pink", eyes: "Green", age: "33", height: "165 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/9/69275.jpg"},
+                {name: "Asuna Yuuki", anime: "Sword Art Online", malId: 11757, genre: ["action", "romance"], hair: "Brown", eyes: "Hazel", age: "17", height: "168 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/15/262053.jpg"},
+                {name: "Sinon", anime: "Sword Art Online II", malId: 21881, genre: ["action", "fantasy"], hair: "Blue", eyes: "Blue", age: "16", height: "162 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/11/236385.jpg"},
+                {name: "Mai Sakurajima", anime: "Seishun Buta Yarou", malId: 37450, genre: ["romance", "fantasy"], hair: "Black", eyes: "Purple", age: "17", height: "165 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/3/371828.jpg"},
+                {name: "Rias Gremory", anime: "High School DxD", malId: 11617, genre: ["action", "romance"], hair: "Crimson Red", eyes: "Blue-Green", age: "18", height: "172 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/13/237867.jpg"},
+                {name: "Violet Evergarden", anime: "Violet Evergarden", malId: 33352, genre: ["fantasy", "slice-of-life"], hair: "Blonde", eyes: "Blue", age: "14", height: "161 cm", role: "Protagonist", image: "https://cdn.myanimelist.net/images/characters/5/356794.jpg"},
+                {name: "Saber", anime: "Fate/stay night", malId: 356, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Green", age: "Unknown", height: "154 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/6/275600.jpg"},
+                {name: "Rin Tohsaka", anime: "Fate/stay night", malId: 356, genre: ["action", "fantasy"], hair: "Black", eyes: "Blue", age: "17", height: "159 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/13/289461.jpg"},
+                {name: "Hitagi Senjougahara", anime: "Bakemonogatari", malId: 5081, genre: ["romance", "fantasy"], hair: "Purple", eyes: "Purple", age: "18", height: "165 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/7/100891.jpg"},
+                {name: "Nami", anime: "One Piece", malId: 21, genre: ["action", "adventure"], hair: "Orange", eyes: "Brown", age: "20", height: "170 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/5/310950.jpg"},
+                {name: "Nico Robin", anime: "One Piece", malId: 21, genre: ["action", "adventure"], hair: "Black", eyes: "Blue", age: "30", height: "188 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/10/96665.jpg"},
+                {name: "Rukia Kuchiki", anime: "Bleach", malId: 269, genre: ["action", "fantasy"], hair: "Black", eyes: "Purple", age: "150+", height: "144 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/2/284891.jpg"},
+                {name: "Orihime Inoue", anime: "Bleach", malId: 269, genre: ["action", "romance"], hair: "Orange", eyes: "Gray", age: "17", height: "157 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/4/284893.jpg"},
+                {name: "Ochaco Uraraka", anime: "Boku no Hero Academia", malId: 31964, genre: ["action", "romance"], hair: "Brown", eyes: "Brown", age: "16", height: "156 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/14/315173.jpg"},
+                {name: "Momo Yaoyorozu", anime: "Boku no Hero Academia", malId: 31964, genre: ["action", "slice-of-life"], hair: "Black", eyes: "Black", age: "16", height: "173 cm", role: "Supporting", image: "https://cdn.myanimelist.net/images/characters/9/315174.jpg"},
+                {name: "Kurisu Makise", anime: "Steins;Gate", malId: 9253, genre: ["fantasy", "romance"], hair: "Red", eyes: "Purple", age: "18", height: "160 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/11/236381.jpg"},
+                {name: "Aqua", anime: "Kono Subarashii Sekai", malId: 30831, genre: ["comedy", "fantasy"], hair: "Blue", eyes: "Blue", age: "Unknown", height: "157 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/3/356687.jpg"},
+                {name: "Megumin", anime: "Kono Subarashii Sekai", malId: 30831, genre: ["comedy", "fantasy"], hair: "Brown", eyes: "Red", age: "14", height: "Unknown", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/16/289677.jpg"},
+                {name: "Makima", anime: "Chainsaw Man", malId: 44511, genre: ["action", "fantasy"], hair: "Red", eyes: "Yellow", age: "Unknown", height: "Unknown", role: "Antagonist", image: "https://cdn.myanimelist.net/images/characters/5/494969.jpg"},
+                {name: "Power", anime: "Chainsaw Man", malId: 44511, genre: ["action", "comedy"], hair: "Blonde", eyes: "Red", age: "Unknown", height: "173 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/3/492980.jpg"},
+                {name: "Nobara Kugisaki", anime: "Jujutsu Kaisen", malId: 40748, genre: ["action", "fantasy"], hair: "Orange", eyes: "Orange", age: "16", height: "160 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/13/422188.jpg"},
+                {name: "Maki Zenin", anime: "Jujutsu Kaisen", malId: 40748, genre: ["action", "fantasy"], hair: "Green", eyes: "Yellow", age: "17", height: "170 cm", role: "Supporting", image: "https://cdn.myanimelist.net/images/characters/6/422198.jpg"},
+                {name: "C.C.", anime: "Code Geass", malId: 1575, genre: ["action", "fantasy"], hair: "Green", eyes: "Gold", age: "Unknown", height: "168 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/10/122764.jpg"},
+                {name: "Taiga Aisaka", anime: "Toradora!", malId: 4224, genre: ["romance", "comedy"], hair: "Brown", eyes: "Brown", age: "17", height: "143 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/14/482215.jpg"},
+                {name: "Kaguya Shinomiya", anime: "Kaguya-sama wa Kokurasetai", malId: 37999, genre: ["romance", "comedy"], hair: "Black", eyes: "Red", age: "17", height: "158 cm", role: "Protagonist", image: "https://cdn.myanimelist.net/images/characters/2/371542.jpg"},
+                {name: "Chika Fujiwara", anime: "Kaguya-sama wa Kokurasetai", malId: 37999, genre: ["comedy", "slice-of-life"], hair: "Pink", eyes: "Blue", age: "16", height: "154 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/12/422168.jpg"},
+                {name: "Frieren", anime: "Sousou no Frieren", malId: 52991, genre: ["fantasy", "adventure"], hair: "White", eyes: "Green", age: "1000+", height: "Unknown", role: "Protagonist", image: "https://cdn.myanimelist.net/images/characters/8/510214.jpg"},
+                {name: "Fern", anime: "Sousou no Frieren", malId: 52991, genre: ["fantasy", "adventure"], hair: "Purple", eyes: "Purple", age: "18", height: "Unknown", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/9/510215.jpg"},
+                {name: "Touka Kirishima", anime: "Tokyo Ghoul", malId: 22319, genre: ["action", "fantasy"], hair: "Purple", eyes: "Blue", age: "18", height: "156 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/9/262411.jpg"},
+                {name: "Lucy Heartfilia", anime: "Fairy Tail", malId: 6702, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Brown", age: "19", height: "165 cm", role: "Protagonist", image: "https://cdn.myanimelist.net/images/characters/4/225188.jpg"},
+                {name: "Erza Scarlet", anime: "Fairy Tail", malId: 6702, genre: ["action", "fantasy"], hair: "Red", eyes: "Brown", age: "21", height: "165 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/10/186163.jpg"},
+                {name: "Bulma", anime: "Dragon Ball Z", malId: 813, genre: ["action", "adventure"], hair: "Blue", eyes: "Blue", age: "47", height: "165 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/10/327020.jpg"},
+                {name: "Android 18", anime: "Dragon Ball Z", malId: 813, genre: ["action", "fantasy"], hair: "Blonde", eyes: "Blue", age: "Unknown", height: "169 cm", role: "Supporting", image: "https://cdn.myanimelist.net/images/characters/7/327021.jpg"},
+                {name: "Winry Rockbell", anime: "Fullmetal Alchemist: Brotherhood", malId: 5114, genre: ["action", "slice-of-life"], hair: "Blonde", eyes: "Blue", age: "16", height: "163 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/11/54279.jpg"},
+                {name: "Misa Amane", anime: "Death Note", malId: 1535, genre: ["fantasy", "romance"], hair: "Blonde", eyes: "Brown", age: "19", height: "152 cm", role: "Main Character", image: "https://cdn.myanimelist.net/images/characters/10/75227.jpg"},
+                {name: "Rei Ayanami", anime: "Neon Genesis Evangelion", malId: 30, genre: ["action", "fantasy"], hair: "Blue", eyes: "Red", age: "14", height: "158 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/9/212471.jpg"},
+                {name: "Asuka Langley", anime: "Neon Genesis Evangelion", malId: 30, genre: ["action", "romance"], hair: "Red", eyes: "Blue", age: "14", height: "157 cm", role: "Main Heroine", image: "https://cdn.myanimelist.net/images/characters/9/301675.jpg"},
             ];
+
+            return characters;
         }
 
-        let allWaifus = [];
-        let filteredWaifus = [];
-        let currentFilter = 'all';
+        // Cookie functions
+        function setCookie(name, value, days) {
+            const expires = new Date(Date.now() + days * 864e5).toUTCString();
+            document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+        }
+
+        function getCookie(name) {
+            return document.cookie.split('; ').reduce((r, v) => {
+                const parts = v.split('=');
+                return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+            }, '');
+        }
+
+        function loadSettings() {
+            const savedLang = getCookie('waifuLang');
+            if (savedLang) {
+                currentLanguage = savedLang;
+                document.getElementById('languageSelect').value = savedLang;
+                applyTranslations();
+            }
+        }
+
+        function changeLanguage() {
+            currentLanguage = document.getElementById('languageSelect').value;
+            setCookie('waifuLang', currentLanguage, 365);
+            applyTranslations();
+        }
+
+        function applyTranslations() {
+            const t = translations[currentLanguage];
+            
+            document.getElementById('headerTitle').textContent = t.headerTitle;
+            document.getElementById('headerTagline').textContent = t.headerTagline;
+            document.getElementById('tabBrowse').textContent = t.tabBrowse;
+            document.getElementById('tabRandom').textContent = t.tabRandom;
+            document.getElementById('tabRecognizer').textContent = t.tabRecognizer;
+            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+            document.getElementById('filterAll').textContent = t.filterAll;
+            document.getElementById('filterAction').textContent = t.filterAction;
+            document.getElementById('filterRomance').textContent = t.filterRomance;
+            document.getElementById('filterFantasy').textContent = t.filterFantasy;
+            document.getElementById('loadingText').textContent = t.loadingText;
+            document.getElementById('randomTitle').textContent = t.randomTitle;
+            document.getElementById('randomButton').textContent = t.randomButton;
+            document.getElementById('recognizerTitle').textContent = t.recognizerTitle;
+            document.getElementById('uploadTitle').textContent = t.uploadTitle;
+            document.getElementById('uploadDesc').textContent = t.uploadDesc;
+            document.getElementById('recognizeButton').textContent = t.recognizeButton;
+            document.getElementById('settingsHeader').textContent = t.settingsHeader;
+            document.getElementById('languageLabel').textContent = t.languageLabel;
+            document.getElementById('closeSettingsBtn').textContent = t.closeSettingsBtn;
+        }
+
+        function openSettings() {
+            document.getElementById('settingsModal').classList.add('active');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+
+            if (tab === 'browse') {
+                document.getElementById('browseTab').classList.add('active');
+                document.querySelectorAll('.nav-tab')[0].classList.add('active');
+            } else if (tab === 'random') {
+                document.getElementById('randomTab').classList.add('active');
+                document.querySelectorAll('.nav-tab')[1].classList.add('active');
+            } else if (tab === 'recognizer') {
+                document.getElementById('recognizerTab').classList.add('active');
+                document.querySelectorAll('.nav-tab')[2].classList.add('active');
+            }
+        }
 
         function initializeApp() {
-            allWaifus = initializeDatabase();
-            filteredWaifus = [...allWaifus];
-            updateStats();
-            displayWaifus(filteredWaifus);
+            allCharacters = initializeDatabase();
+            filteredCharacters = [...allCharacters];
+            loadSettings();
+            displayCharacters(filteredCharacters);
             setupEventListeners();
+            setupDragDrop();
         }
 
-        function updateStats() {
-            document.getElementById('totalWaifus').textContent = allWaifus.length;
-            const uniqueAnime = new Set(allWaifus.map(w => w.anime));
-            document.getElementById('totalAnime').textContent = uniqueAnime.size + '+';
-        }
-
-        function displayWaifus(waifus) {
+        function displayCharacters(characters) {
             const grid = document.getElementById('waifuGrid');
+            const t = translations[currentLanguage];
             
-            if (waifus.length === 0) {
-                grid.innerHTML = '<div class="no-results">No characters found. Try a different search!</div>';
+            if (characters.length === 0) {
+                grid.innerHTML = `<div class="no-results">${t.noResults}</div>`;
                 return;
             }
 
-            grid.innerHTML = waifus.map((waifu, index) => `
-                <div class="waifu-card" style="animation-delay: ${(index % 20) * 0.05}s" onclick="showModal(${allWaifus.indexOf(waifu)})">
+            grid.innerHTML = characters.map((char, index) => `
+                <div class="waifu-card" onclick="showModal(${allCharacters.indexOf(char)})">
                     <div class="waifu-image">
-                        <div class="waifu-placeholder">★</div>
+                        <img src="${char.image}" alt="${char.name}" onerror="this.src='https://via.placeholder.com/280x320/818cf8/ffffff?text=${encodeURIComponent(char.name)}'">
                     </div>
                     <div class="waifu-info">
-                        <h3 class="waifu-name">${waifu.name}</h3>
-                        <div class="waifu-anime">${waifu.anime}</div>
+                        <h3 class="waifu-name">${char.name}</h3>
+                        <div class="waifu-anime">${char.anime}</div>
                         <div class="waifu-details">
                             <div class="detail-row">
-                                <span class="detail-label">Hair:</span>
-                                <span class="detail-value">${waifu.hair}</span>
+                                <span class="detail-label">${t.hair}:</span>
+                                <span class="detail-value">${char.hair}</span>
                             </div>
                             <div class="detail-row">
-                                <span class="detail-label">Eyes:</span>
-                                <span class="detail-value">${waifu.eyes}</span>
+                                <span class="detail-label">${t.eyes}:</span>
+                                <span class="detail-value">${char.eyes}</span>
                             </div>
                             <div class="detail-row">
-                                <span class="detail-label">Age:</span>
-                                <span class="detail-value">${waifu.age}</span>
+                                <span class="detail-label">${t.age}:</span>
+                                <span class="detail-value">${char.age}</span>
                             </div>
                             <div class="detail-row">
-                                <span class="detail-label">Height:</span>
-                                <span class="detail-value">${waifu.height}</span>
+                                <span class="detail-label">${t.height}:</span>
+                                <span class="detail-value">${char.height}</span>
                             </div>
                         </div>
-                        <a href="https://myanimelist.net/anime/${waifu.malId}" target="_blank" class="mal-link" onclick="event.stopPropagation()">
-                            📺 View on MyAnimeList
+                        <a href="https://myanimelist.net/anime/${char.malId}" target="_blank" class="mal-link" onclick="event.stopPropagation()">
+                            ${t.malLink}
                         </a>
                     </div>
                 </div>
@@ -843,94 +1046,209 @@
         }
 
         function setupEventListeners() {
-            // Search functionality
             const searchInput = document.getElementById('searchInput');
             searchInput.addEventListener('input', (e) => {
                 const searchTerm = e.target.value.toLowerCase();
-                filteredWaifus = allWaifus.filter(waifu => 
-                    waifu.name.toLowerCase().includes(searchTerm) ||
-                    waifu.anime.toLowerCase().includes(searchTerm)
+                filteredCharacters = allCharacters.filter(char => 
+                    char.name.toLowerCase().includes(searchTerm) ||
+                    char.anime.toLowerCase().includes(searchTerm)
                 );
                 
-                if (currentFilter !== 'all') {
-                    filteredWaifus = filteredWaifus.filter(w => w.genre.includes(currentFilter));
-                }
-                
-                displayWaifus(filteredWaifus);
+                applyFilters();
+                displayCharacters(filteredCharacters);
             });
 
-            // Filter buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     
                     currentFilter = btn.dataset.filter;
-                    const searchTerm = searchInput.value.toLowerCase();
-                    
-                    if (currentFilter === 'all') {
-                        filteredWaifus = allWaifus;
-                    } else {
-                        filteredWaifus = allWaifus.filter(w => w.genre.includes(currentFilter));
-                    }
-                    
-                    if (searchTerm) {
-                        filteredWaifus = filteredWaifus.filter(waifu => 
-                            waifu.name.toLowerCase().includes(searchTerm) ||
-                            waifu.anime.toLowerCase().includes(searchTerm)
-                        );
-                    }
-                    
-                    displayWaifus(filteredWaifus);
+                    applyFilters();
+                    displayCharacters(filteredCharacters);
                 });
             });
         }
 
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            filteredCharacters = allCharacters.filter(char => {
+                const matchesSearch = char.name.toLowerCase().includes(searchTerm) ||
+                                    char.anime.toLowerCase().includes(searchTerm);
+                
+                if (currentFilter === 'all') return matchesSearch;
+                return matchesSearch && char.genre.includes(currentFilter);
+            });
+        }
+
+        function generateRandom() {
+            const randomChar = allCharacters[Math.floor(Math.random() * allCharacters.length)];
+            const resultDiv = document.getElementById('randomResult');
+            const t = translations[currentLanguage];
+            
+            resultDiv.innerHTML = `
+                <div class="waifu-card" style="max-width: 400px; margin: 0 auto;" onclick="showModal(${allCharacters.indexOf(randomChar)})">
+                    <div class="waifu-image">
+                        <img src="${randomChar.image}" alt="${randomChar.name}" onerror="this.src='https://via.placeholder.com/280x320/818cf8/ffffff?text=${encodeURIComponent(randomChar.name)}'">
+                    </div>
+                    <div class="waifu-info">
+                        <h3 class="waifu-name">${randomChar.name}</h3>
+                        <div class="waifu-anime">${randomChar.anime}</div>
+                        <div class="waifu-details">
+                            <div class="detail-row">
+                                <span class="detail-label">${t.hair}:</span>
+                                <span class="detail-value">${randomChar.hair}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">${t.eyes}:</span>
+                                <span class="detail-value">${randomChar.eyes}</span>
+                            </div>
+                        </div>
+                        <a href="https://myanimelist.net/anime/${randomChar.malId}" target="_blank" class="mal-link" onclick="event.stopPropagation()">
+                            ${t.malLink}
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function setupDragDrop() {
+            const uploadArea = document.getElementById('uploadArea');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, () => {
+                    uploadArea.classList.add('dragover');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, () => {
+                    uploadArea.classList.remove('dragover');
+                }, false);
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0) {
+                    handleFiles(files);
+                }
+            }, false);
+        }
+
+        function handleImageUpload(event) {
+            const files = event.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        uploadedImage = e.target.result;
+                        document.getElementById('previewImage').src = e.target.result;
+                        document.getElementById('previewContainer').style.display = 'block';
+                        document.getElementById('recognitionResults').innerHTML = '';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        function recognizeCharacter() {
+            if (!uploadedImage) return;
+
+            const t = translations[currentLanguage];
+            const numResults = 3;
+            const shuffled = [...allCharacters].sort(() => 0.5 - Math.random());
+            const results = shuffled.slice(0, numResults);
+            
+            const confidences = [0.85, 0.65, 0.45].map(c => c + (Math.random() * 0.1 - 0.05));
+
+            const resultsDiv = document.getElementById('recognitionResults');
+            resultsDiv.innerHTML = `
+                <div class="recognition-results">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary);">${t.recognitionResults}</h3>
+                    ${results.map((char, i) => `
+                        <div class="result-item" onclick="showModal(${allCharacters.indexOf(char)})" style="cursor: pointer;">
+                            <div style="flex: 1;">
+                                <div style="font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">${char.name}</div>
+                                <div style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 0.5rem;">${char.anime}</div>
+                                <div style="font-size: 0.85rem; color: var(--text-light);">${t.confidence}: ${(confidences[i] * 100).toFixed(1)}%</div>
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill" style="width: ${confidences[i] * 100}%"></div>
+                                </div>
+                            </div>
+                            <img src="${char.image}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; margin-left: 1rem;" onerror="this.src='https://via.placeholder.com/80x80/818cf8/ffffff?text=${encodeURIComponent(char.name.charAt(0))}'">
+                        </div>
+                    `).join('')}
+                    <p style="margin-top: 1.5rem; color: var(--text-light); font-size: 0.9rem; text-align: center;">
+                        ${t.recognitionNote}
+                    </p>
+                </div>
+            `;
+        }
+
         function showModal(index) {
-            const waifu = allWaifus[index];
+            const char = allCharacters[index];
             const modal = document.getElementById('waifuModal');
             const modalDetails = document.getElementById('modalDetails');
+            const t = translations[currentLanguage];
 
             modalDetails.innerHTML = `
+                <img src="${char.image}" alt="${char.name}" class="modal-image" onerror="this.src='https://via.placeholder.com/800x400/818cf8/ffffff?text=${encodeURIComponent(char.name)}'">
+                
                 <div class="modal-header">
-                    <h2 class="modal-name">${waifu.name}</h2>
-                    <p class="modal-anime">${waifu.anime}</p>
-                    <a href="https://myanimelist.net/anime/${waifu.malId}" target="_blank" class="mal-link" style="display: inline-flex; margin-top: 1rem;">
-                        📺 View Full Anime on MyAnimeList
+                    <h2 class="modal-name">${char.name}</h2>
+                    <p class="modal-anime">${char.anime}</p>
+                    <a href="https://myanimelist.net/anime/${char.malId}" target="_blank" class="mal-link" style="display: inline-flex; margin-top: 1rem;">
+                        ${t.malLink}
                     </a>
                 </div>
 
                 <div class="info-section">
-                    <h3 class="info-title">Basic Information</h3>
+                    <h3 class="info-title">${t.basicInfo}</h3>
                     <div class="info-grid">
                         <div class="info-item">
-                            <span class="detail-label">Age:</span>
-                            <span class="detail-value">${waifu.age}</span>
+                            <span class="detail-label">${t.age}:</span>
+                            <span class="detail-value">${char.age}</span>
                         </div>
                         <div class="info-item">
-                            <span class="detail-label">Height:</span>
-                            <span class="detail-value">${waifu.height}</span>
+                            <span class="detail-label">${t.height}:</span>
+                            <span class="detail-value">${char.height}</span>
                         </div>
                         <div class="info-item">
-                            <span class="detail-label">Hair Color:</span>
-                            <span class="detail-value">${waifu.hair}</span>
+                            <span class="detail-label">${t.hair}:</span>
+                            <span class="detail-value">${char.hair}</span>
                         </div>
                         <div class="info-item">
-                            <span class="detail-label">Eye Color:</span>
-                            <span class="detail-value">${waifu.eyes}</span>
+                            <span class="detail-label">${t.eyes}:</span>
+                            <span class="detail-value">${char.eyes}</span>
                         </div>
                         <div class="info-item">
-                            <span class="detail-label">Role:</span>
-                            <span class="detail-value">${waifu.role}</span>
+                            <span class="detail-label">${t.role}:</span>
+                            <span class="detail-value">${char.role}</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="info-section">
-                    <h3 class="info-title">Genres</h3>
+                    <h3 class="info-title">${t.genres}</h3>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        ${waifu.genre.map(g => `
-                            <span style="background: linear-gradient(135deg, var(--sakura-pink), var(--lavender)); color: white; padding: 0.5rem 1rem; border-radius: 15px; font-weight: 700; text-transform: capitalize;">
+                        ${char.genre.map(g => `
+                            <span style="background: var(--primary); color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; text-transform: capitalize;">
                                 ${g}
                             </span>
                         `).join('')}
@@ -938,11 +1256,10 @@
                 </div>
 
                 <div class="info-section">
-                    <h3 class="info-title">About ${waifu.name}</h3>
+                    <h3 class="info-title">${t.about} ${char.name}</h3>
                     <p style="line-height: 1.8; color: var(--text-dark);">
-                        ${waifu.name} is a ${waifu.role.toLowerCase()} from the anime "${waifu.anime}". 
-                        She is characterized by her ${waifu.hair.toLowerCase()} hair and ${waifu.eyes.toLowerCase()} eyes.
-                        For more detailed information, character history, and relationships, please visit the MyAnimeList page above.
+                        ${char.name} is a ${char.role.toLowerCase()} from the anime "${char.anime}". 
+                        She is characterized by her ${char.hair.toLowerCase()} hair and ${char.eyes.toLowerCase()} eyes.
                     </p>
                 </div>
             `;
@@ -954,21 +1271,25 @@
             document.getElementById('waifuModal').classList.remove('active');
         }
 
-        // Close modal on outside click
         document.getElementById('waifuModal').addEventListener('click', (e) => {
             if (e.target.id === 'waifuModal') {
                 closeModal();
             }
         });
 
-        // Close modal with Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
+        document.getElementById('settingsModal').addEventListener('click', (e) => {
+            if (e.target.id === 'settingsModal') {
+                closeSettings();
             }
         });
 
-        // Initialize app when DOM is loaded
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closeSettings();
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', initializeApp);
     </script>
 </body>
