@@ -196,9 +196,10 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
+            z-index: 2000;
             justify-content: center;
             align-items: center;
+            padding: 1rem;
         }
 
         .video-modal.active {
@@ -207,28 +208,38 @@
 
         .video-wrapper {
             position: relative;
-            width: 90%;
+            width: 100%;
             max-width: 1200px;
-            background: #000;
+            background: #1a1a1a;
             border-radius: 10px;
             overflow: hidden;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .video-header {
             background: #1a1a1a;
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid #2a2a2a;
+            flex-shrink: 0;
         }
 
         .video-title {
             font-size: 1.2rem;
             font-weight: 600;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 1rem;
         }
 
         .close-btn {
-            background: none;
+            background: #2a2a2a;
             border: none;
             color: #fff;
             font-size: 1.5rem;
@@ -238,12 +249,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            transition: background 0.3s;
+            border-radius: 5px;
+            transition: all 0.3s;
+            flex-shrink: 0;
         }
 
         .close-btn:hover {
             background: #e50914;
+            transform: scale(1.1);
         }
 
         .video-container {
@@ -251,6 +264,8 @@
             width: 100%;
             padding-bottom: 56.25%;
             height: 0;
+            background: #000;
+            flex-shrink: 0;
         }
 
         .video-container iframe {
@@ -264,22 +279,55 @@
 
         .episode-list {
             background: #1a1a1a;
-            padding: 1rem;
-            max-height: 200px;
+            padding: 1.5rem;
+            max-height: 250px;
             overflow-y: auto;
+            flex-shrink: 1;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .episode-list h4 {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
         }
 
         .episode-item {
-            padding: 0.8rem;
+            padding: 1rem;
             background: #2a2a2a;
             margin-bottom: 0.5rem;
             border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            font-weight: 500;
         }
 
         .episode-item:hover {
             background: #e50914;
+            transform: translateX(5px);
+        }
+
+        .episode-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Scrollbar for episode list */
+        .episode-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .episode-list::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .episode-list::-webkit-scrollbar-thumb {
+            background: #e50914;
+            border-radius: 4px;
+        }
+
+        .episode-list::-webkit-scrollbar-thumb:hover {
+            background: #c40812;
         }
 
         /* Footer */
@@ -319,8 +367,75 @@
                 height: 250px;
             }
 
+            .video-modal {
+                padding: 0.5rem;
+            }
+
             .video-wrapper {
-                width: 95%;
+                max-height: 95vh;
+            }
+
+            .video-header {
+                padding: 0.8rem 1rem;
+            }
+
+            .video-title {
+                font-size: 1rem;
+            }
+
+            .close-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1.3rem;
+            }
+
+            .episode-list {
+                padding: 1rem;
+                max-height: 180px;
+            }
+
+            .episode-list h4 {
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .episode-item {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .season-tabs {
+                gap: 0.3rem;
+            }
+
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .genre-filter {
+                gap: 0.3rem;
+            }
+
+            .genre-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-title {
+                font-size: 0.9rem;
+            }
+
+            .close-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 1.2rem;
+            }
+
+            .episode-list {
+                max-height: 150px;
             }
         }
 
