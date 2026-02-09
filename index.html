@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEONIME - Stream Anime</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>AnimeStream - Nonton Anime Gratis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,442 +12,179 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --neon-pink: #ff006e;
-            --neon-blue: #00d9ff;
-            --neon-purple: #a537fd;
-            --neon-green: #39ff14;
-            --dark-bg: #0a0a0f;
-            --dark-panel: #151520;
-            --accent-glow: 0 0 20px rgba(255, 0, 110, 0.5);
-        }
-
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--dark-bg);
+            font-family: 'Poppins', sans-serif;
+            background: #0f0f0f;
             color: #fff;
-            overflow-x: hidden;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="4" fill="%23ff006e" opacity="0.6"/></svg>'), auto;
-        }
-
-        /* Animated background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(165, 55, 253, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(255, 0, 110, 0.1) 0%, transparent 50%);
-            animation: bgShift 20s ease infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes bgShift {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
-        }
-
-        /* Glitch effect */
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-
-        .glitch {
-            position: relative;
-            display: inline-block;
-        }
-
-        .glitch:hover {
-            animation: glitch 0.3s infinite;
         }
 
         /* Header */
         header {
-            position: fixed;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 1rem 2rem;
+            position: sticky;
             top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 0, 110, 0.3);
-            padding: 1.5rem 4rem;
+            z-index: 100;
+            border-bottom: 2px solid #e50914;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            animation: slideDown 0.8s ease;
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue), var(--neon-purple));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
-            letter-spacing: 3px;
-        }
-
-        nav {
-            display: flex;
-            gap: 2.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e50914;
         }
 
         nav a {
             color: #fff;
             text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
-            transition: width 0.3s ease;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: color 0.3s;
         }
 
         nav a:hover {
-            color: var(--neon-pink);
-            text-shadow: 0 0 10px var(--neon-pink);
+            color: #e50914;
         }
 
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
+        /* Banner */
+        .banner {
             position: relative;
-            height: 100vh;
+            height: 500px;
+            background: linear-gradient(to bottom, transparent, #0f0f0f),
+                        url('https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1600&h=500&fit=crop') center/cover;
             display: flex;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin-top: -80px;
+            margin-bottom: 2rem;
         }
 
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .banner-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
             width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(165, 55, 253, 0.2)),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23151520" width="1200" height="800"/><g opacity="0.1"><line x1="0" y1="100" x2="1200" y2="100" stroke="%23ff006e" stroke-width="1"/><line x1="0" y1="200" x2="1200" y2="200" stroke="%2300d9ff" stroke-width="1"/><line x1="0" y1="300" x2="1200" y2="300" stroke="%23a537fd" stroke-width="1"/><line x1="0" y1="400" x2="1200" y2="400" stroke="%23ff006e" stroke-width="1"/><line x1="0" y1="500" x2="1200" y2="500" stroke="%2300d9ff" stroke-width="1"/><line x1="0" y1="600" x2="1200" y2="600" stroke="%23a537fd" stroke-width="1"/><line x1="0" y1="700" x2="1200" y2="700" stroke="%23ff006e" stroke-width="1"/></g></svg>');
-            background-size: cover;
-            filter: blur(0px);
-            animation: heroZoom 30s ease infinite alternate;
         }
 
-        @keyframes heroZoom {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            max-width: 900px;
-            padding: 2rem;
-            animation: fadeInUp 1s ease 0.3s backwards;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 5rem;
-            font-weight: 900;
+        .banner h1 {
+            font-size: 3rem;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff, var(--neon-blue), var(--neon-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            line-height: 1.2;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
         }
 
-        .hero p {
-            font-size: 1.4rem;
-            margin-bottom: 2.5rem;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 500;
+        .banner p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
         }
 
-        .cta-button {
-            display: inline-block;
-            padding: 1.2rem 3rem;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            color: #fff;
+        .banner-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
             text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-radius: 50px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+            display: inline-block;
         }
 
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
+        .btn-primary {
+            background: #e50914;
+            color: #fff;
         }
 
-        .cta-button:hover::before {
-            left: 100%;
+        .btn-primary:hover {
+            background: #c40812;
+            transform: scale(1.05);
         }
 
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 50px rgba(255, 0, 110, 0.8);
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            backdrop-filter: blur(10px);
         }
 
-        /* Section */
-        section {
-            position: relative;
-            z-index: 10;
-            padding: 5rem 4rem;
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
         .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--neon-pink), transparent);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
         }
 
         /* Anime Grid */
         .anime-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
         .anime-card {
-            position: relative;
-            background: var(--dark-panel);
-            border-radius: 15px;
+            background: #1a1a1a;
+            border-radius: 10px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeIn 0.6s ease backwards;
-        }
-
-        .anime-card:nth-child(1) { animation-delay: 0.1s; }
-        .anime-card:nth-child(2) { animation-delay: 0.2s; }
-        .anime-card:nth-child(3) { animation-delay: 0.3s; }
-        .anime-card:nth-child(4) { animation-delay: 0.4s; }
-        .anime-card:nth-child(5) { animation-delay: 0.5s; }
-        .anime-card:nth-child(6) { animation-delay: 0.6s; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            transition: all 0.3s;
         }
 
         .anime-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.5),
-                0 0 30px rgba(255, 0, 110, 0.3);
-            border-color: var(--neon-pink);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(229, 9, 20, 0.3);
         }
 
-        .anime-thumbnail {
+        .anime-poster {
             width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, var(--dark-panel), rgba(165, 55, 253, 0.2));
-            position: relative;
-            overflow: hidden;
-        }
-
-        .anime-thumbnail::after {
-            content: 'PLAY';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            font-weight: 900;
-            color: #fff;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            text-shadow: 0 0 20px var(--neon-pink);
-        }
-
-        .anime-card:hover .anime-thumbnail::after {
-            opacity: 1;
-        }
-
-        .anime-thumbnail img {
-            width: 100%;
-            height: 100%;
+            height: 350px;
             object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .anime-card:hover .anime-thumbnail img {
-            transform: scale(1.1);
-            filter: brightness(0.4);
+            background: #2a2a2a;
         }
 
         .anime-info {
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .anime-title {
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .anime-meta {
             display: flex;
             gap: 1rem;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 0.5rem;
+            color: #aaa;
         }
 
         .anime-rating {
-            color: var(--neon-green);
-            font-weight: 600;
-        }
-
-        .anime-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-
-        .tag {
-            padding: 0.3rem 0.8rem;
-            background: rgba(255, 0, 110, 0.2);
-            border: 1px solid var(--neon-pink);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--neon-pink);
-            font-weight: 600;
-        }
-
-        /* Categories */
-        .categories {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin: 2rem 0;
-        }
-
-        .category-btn {
-            padding: 0.8rem 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        .category-btn:hover,
-        .category-btn.active {
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            border-color: var(--neon-pink);
-            box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(10, 10, 15, 0.9);
-            padding: 3rem 4rem;
-            text-align: center;
-            border-top: 1px solid rgba(255, 0, 110, 0.3);
-            margin-top: 5rem;
-        }
-
-        footer p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--dark-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, var(--neon-pink), var(--neon-purple));
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--neon-pink);
+            color: #ffd700;
         }
 
         /* Video Modal */
@@ -459,332 +196,402 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            animation: fadeIn 0.3s ease;
         }
 
         .video-modal.active {
             display: flex;
         }
 
-        .video-container {
+        .video-wrapper {
             position: relative;
             width: 90%;
             max-width: 1200px;
-            aspect-ratio: 16 / 9;
             background: #000;
-            border-radius: 15px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 0 50px rgba(255, 0, 110, 0.5);
-            animation: scaleIn 0.4s ease;
         }
 
-        @keyframes scaleIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        .video-header {
+            background: #1a1a1a;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #e50914;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
         }
 
         .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: none;
         }
 
-        .close-modal {
-            position: absolute;
-            top: -50px;
-            right: 0;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 2.5rem;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            transition: all 0.3s ease;
-            padding: 0.5rem;
-            line-height: 1;
+        .episode-list {
+            background: #1a1a1a;
+            padding: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
         }
 
-        .close-modal:hover {
-            color: var(--neon-pink);
-            text-shadow: 0 0 20px var(--neon-pink);
-            transform: rotate(90deg);
-        }
-
-        .video-info-panel {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
-            padding: 2rem;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .video-container:hover .video-info-panel {
-            transform: translateY(0);
-        }
-
-        .video-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            color: #fff;
+        .episode-item {
+            padding: 0.8rem;
+            background: #2a2a2a;
             margin-bottom: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
         }
 
-        .video-description {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+        .episode-item:hover {
+            background: #e50914;
         }
 
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 2px solid #e50914;
+        }
+
+        footer p {
+            color: #aaa;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            header {
-                padding: 1rem 2rem;
-                flex-direction: column;
-                gap: 1rem;
+            .banner h1 {
+                font-size: 2rem;
             }
 
-            nav {
-                gap: 1.5rem;
+            .banner {
+                height: 400px;
             }
 
-            .hero h1 {
-                font-size: 3rem;
+            nav a {
+                margin-left: 1rem;
+                font-size: 0.9rem;
             }
 
             .anime-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 1.5rem;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
             }
 
-            section {
-                padding: 3rem 2rem;
+            .anime-poster {
+                height: 250px;
             }
 
-            .video-container {
+            .video-wrapper {
                 width: 95%;
             }
+        }
 
-            .close-modal {
-                top: -40px;
-                font-size: 2rem;
-            }
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #e50914;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c40812;
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="logo glitch">NEONIME</div>
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#trending">Trending</a>
-            <a href="#genres">Genres</a>
-            <a href="#schedule">Schedule</a>
-        </nav>
+        <div class="nav-container">
+            <div class="logo">AnimeStream</div>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#trending">Trending</a>
+                <a href="#ongoing">Ongoing</a>
+                <a href="#completed">Completed</a>
+            </nav>
+        </div>
     </header>
 
-    <div class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <h1>Stream The Future</h1>
-            <p>Immerse yourself in the ultimate anime experience. Thousands of episodes, zero limits.</p>
-            <a href="#trending" class="cta-button">Start Watching</a>
+    <!-- Banner -->
+    <div class="banner">
+        <div class="banner-content">
+            <h1>Nonton Anime Gratis</h1>
+            <p>Streaming anime terbaru dan terpopuler dengan subtitle Indonesia. Update setiap hari!</p>
+            <div class="banner-buttons">
+                <a href="#trending" class="btn btn-primary">Mulai Nonton</a>
+                <a href="#ongoing" class="btn btn-secondary">Lihat Anime Ongoing</a>
+            </div>
         </div>
     </div>
 
-    <section id="trending">
-        <h2 class="section-title">Trending Now</h2>
-        
-        <div class="categories">
-            <button class="category-btn active">All</button>
-            <button class="category-btn">Action</button>
-            <button class="category-btn">Romance</button>
-            <button class="category-btn">Sci-Fi</button>
-            <button class="category-btn">Fantasy</button>
-            <button class="category-btn">Thriller</button>
-        </div>
-
-        <div class="anime-grid">
-            <div class="anime-card" onclick="playVideo('dQw4w9WgXcQ', 'Attack on Titan - Final Season', 'Humanity\'s last stand against the titans. Epic battles and shocking revelations.')">
-                <div class="anime-thumbnail">
-                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #ff006e, #a537fd); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">ATTACK ON TITAN</div>
-                </div>
-                <div class="anime-info">
-                    <h3 class="anime-title">Attack on Titan</h3>
-                    <div class="anime-meta">
-                        <span class="anime-rating">★ 9.2</span>
-                        <span>2024</span>
-                        <span>87 Episodes</span>
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Trending Section -->
+        <section id="trending">
+            <h2 class="section-title">🔥 Trending Sekarang</h2>
+            <div class="anime-grid">
+                <!-- Spy x Family -->
+                <div class="anime-card" onclick="openVideo('Spy x Family', 'fzQ6gRAEoy0', [
+                    {title: 'Episode 1', id: 'fzQ6gRAEoy0'},
+                    {title: 'Episode 2', id: 'ofSLCFYUJfA'},
+                    {title: 'Episode 3', id: 'v4yLeNt-kCU'}
+                ])">
+                    <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=250&h=350&fit=crop" alt="Spy x Family" class="anime-poster">
+                    <div class="anime-info">
+                        <div class="anime-title">Spy x Family</div>
+                        <div class="anime-meta">
+                            <span class="anime-rating">⭐ 8.7</span>
+                            <span>2024</span>
+                            <span>37 Eps</span>
+                        </div>
                     </div>
-                    <div class="anime-tags">
-                        <span class="tag">Action</span>
-                        <span class="tag">Dark Fantasy</span>
+                </div>
+
+                <!-- Demon Slayer -->
+                <div class="anime-card" onclick="openVideo('Demon Slayer: Kimetsu no Yaiba', 'jNQXAC9IVRw', [
+                    {title: 'Episode 1', id: 'jNQXAC9IVRw'},
+                    {title: 'Episode 2', id: 'e8YBesRKq_U'},
+                    {title: 'Episode 3', id: 'dQw4w9WgXcQ'}
+                ])">
+                    <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=250&h=350&fit=crop" alt="Demon Slayer" class="anime-poster">
+                    <div class="anime-info">
+                        <div class="anime-title">Demon Slayer: Kimetsu no Yaiba</div>
+                        <div class="anime-meta">
+                            <span class="anime-rating">⭐ 9.0</span>
+                            <span>2024</span>
+                            <span>55 Eps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jujutsu Kaisen -->
+                <div class="anime-card" onclick="openVideo('Jujutsu Kaisen', 'e8YBesRKq_U', [
+                    {title: 'Episode 1', id: 'e8YBesRKq_U'},
+                    {title: 'Episode 2', id: 'jNQXAC9IVRw'},
+                    {title: 'Episode 3', id: 'fzQ6gRAEoy0'}
+                ])">
+                    <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=250&h=350&fit=crop" alt="Jujutsu Kaisen" class="anime-poster">
+                    <div class="anime-info">
+                        <div class="anime-title">Jujutsu Kaisen</div>
+                        <div class="anime-meta">
+                            <span class="anime-rating">⭐ 8.8</span>
+                            <span>2024</span>
+                            <span>47 Eps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- One Piece -->
+                <div class="anime-card" onclick="openVideo('One Piece', 'dQw4w9WgXcQ', [
+                    {title: 'Episode 1100', id: 'dQw4w9WgXcQ'},
+                    {title: 'Episode 1101', id: 'fzQ6gRAEoy0'},
+                    {title: 'Episode 1102', id: 'jNQXAC9IVRw'}
+                ])">
+                    <img src="https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=250&h=350&fit=crop" alt="One Piece" class="anime-poster">
+                    <div class="anime-info">
+                        <div class="anime-title">One Piece</div>
+                        <div class="anime-meta">
+                            <span class="anime-rating">⭐ 9.5</span>
+                            <span>2024</span>
+                            <span>1100+ Eps</span>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="anime-card" onclick="playVideo('jNQXAC9IVRw', 'Demon Slayer - Mugen Train', 'Join Tanjiro and friends on an unforgettable journey aboard the Mugen Train.')">
-                <div class="anime-thumbnail">
-                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #00d9ff, #a537fd); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">DEMON SLAYER</div>
-                </div>
-                <div class="anime-info">
-                    <h3 class="anime-title">Demon Slayer</h3>
-                    <div class="anime-meta">
-                        <span class="anime-rating">★ 9.0</span>
-                        <span>2024</span>
-                        <span>55 Episodes</span>
+        <!-- Ongoing Section -->
+        <section id="ongoing">
+            <h2 class="section-title">📺 Anime Ongoing</h2>
+            <div class="anime-grid">
+                <!-- Attack on Titan -->
+                <div class="anime-card" onclick="openVideo('Attack on Titan Final Season', 'dQw4w9WgXcQ', [
+                    {title: 'Episode 1', id: 'dQw4w9WgXcQ'},
+                    {title: 'Episode 2', id: 'fzQ6gRAEoy0'}
+                ])">
+                    <img src="https://images.unsplash.com/photo-1613376023733-0a73315d9b06?w=250&h=350&fit=crop" alt="Attack on Titan" class="anime-poster">
+                    <div class="anime-info">
+                        <div class="anime-title">Attack on Titan Final Season</div>
+                        <div class="anime-meta">
+                            <span class="anime-rating">⭐ 9.2</span>
+                            <span>2024</span>
+                            <span>87 Eps</span>
+                        </div>
                     </div>
-                    <div class="anime-tags">
-                        <span class="tag">Adventure</span>
-                        <span class="tag">Supernatural</span>
+                </div>
+
+                <!-- Chainsaw Man -->
+                <div class="anime-card" onclick="openVideo('Chainsaw Man', 'v4yLeNt-kCU', [
+                    {title: 'Episode 1', id: 'v4yLeNt-kCU'},
+                    {title: 'Episode 2', id: 'ofSLCFYUJfA'}
+                ])">
+                    <img src="https://images.unsplash.com/photo-1606041011872-596597976b25?w=250&h=350&fit=crop" alt="Chainsaw Man" class="anime-poster">
+                    <div class="anime-info">
+                        <div class="anime-title">Chainsaw Man</div>
+                        <div class="anime-meta">
+                            <span class="anime-rating">⭐ 8.6</span>
+                            <span>2024</span>
+                            <span>24 Eps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Frieren -->
+                <div class="anime-card" onclick="openVideo('Frieren: Beyond Journey\'s End', 'fzQ6gRAEoy0', [
+                    {title: 'Episode 1', id: 'fzQ6gRAEoy0'},
+                    {title: 'Episode 2', id: 'jNQXAC9IVRw'}
+                ])">
+                    <img src="https://images.unsplash.com/photo-1611419010196-a360856fc42f?w=250&h=350&fit=crop" alt="Frieren" class="anime-poster">
+                    <div class="anime-info">
+                        <div class="anime-title">Frieren: Beyond Journey's End</div>
+                        <div class="anime-meta">
+                            <span class="anime-rating">⭐ 9.3</span>
+                            <span>2024</span>
+                            <span>28 Eps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Hero Academia -->
+                <div class="anime-card" onclick="openVideo('My Hero Academia Season 7', 'ofSLCFYUJfA', [
+                    {title: 'Episode 1', id: 'ofSLCFYUJfA'},
+                    {title: 'Episode 2', id: 'v4yLeNt-kCU'}
+                ])">
+                    <img src="https://images.unsplash.com/photo-1601850494422-3cf14624b0b3?w=250&h=350&fit=crop" alt="My Hero Academia" class="anime-poster">
+                    <div class="anime-info">
+                        <div class="anime-title">My Hero Academia Season 7</div>
+                        <div class="anime-meta">
+                            <span class="anime-rating">⭐ 8.5</span>
+                            <span>2024</span>
+                            <span>25 Eps</span>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="anime-card" onclick="playVideo('e8YBesRKq_U', 'Jujutsu Kaisen - Shibuya Arc', 'The most intense arc yet. Cursed spirits vs Jujutsu sorcerers in an all-out war.')">
-                <div class="anime-thumbnail">
-                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #39ff14, #00d9ff); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">JUJUTSU KAISEN</div>
-                </div>
-                <div class="anime-info">
-                    <h3 class="anime-title">Jujutsu Kaisen</h3>
-                    <div class="anime-meta">
-                        <span class="anime-rating">★ 8.8</span>
-                        <span>2024</span>
-                        <span>47 Episodes</span>
-                    </div>
-                    <div class="anime-tags">
-                        <span class="tag">Action</span>
-                        <span class="tag">Supernatural</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="anime-card" onclick="playVideo('ofSLCFYUJfA', 'Spy x Family - Mission Start', 'A spy, an assassin, and a telepath form the world\'s most unusual family.')">
-                <div class="anime-thumbnail">
-                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #ff006e, #00d9ff); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">SPY X FAMILY</div>
-                </div>
-                <div class="anime-info">
-                    <h3 class="anime-title">Spy x Family</h3>
-                    <div class="anime-meta">
-                        <span class="anime-rating">★ 8.7</span>
-                        <span>2024</span>
-                        <span>37 Episodes</span>
-                    </div>
-                    <div class="anime-tags">
-                        <span class="tag">Comedy</span>
-                        <span class="tag">Action</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="anime-card" onclick="playVideo('v4yLeNt-kCU', 'Chainsaw Man - Devil Hunter', 'Denji becomes the Chainsaw Man to pay off his debts and live a normal life.')">
-                <div class="anime-thumbnail">
-                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #a537fd, #ff006e); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">CHAINSAW MAN</div>
-                </div>
-                <div class="anime-info">
-                    <h3 class="anime-title">Chainsaw Man</h3>
-                    <div class="anime-meta">
-                        <span class="anime-rating">★ 8.6</span>
-                        <span>2024</span>
-                        <span>24 Episodes</span>
-                    </div>
-                    <div class="anime-tags">
-                        <span class="tag">Action</span>
-                        <span class="tag">Horror</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="anime-card" onclick="playVideo('fzQ6gRAEoy0', 'Frieren: Beyond Journey\'s End', 'An elf mage reflects on her adventures and the meaning of time and friendship.')">
-                <div class="anime-thumbnail">
-                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #00d9ff, #39ff14); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">FRIEREN</div>
-                </div>
-                <div class="anime-info">
-                    <h3 class="anime-title">Frieren: Beyond Journey's End</h3>
-                    <div class="anime-meta">
-                        <span class="anime-rating">★ 9.3</span>
-                        <span>2024</span>
-                        <span>28 Episodes</span>
-                    </div>
-                    <div class="anime-tags">
-                        <span class="tag">Fantasy</span>
-                        <span class="tag">Adventure</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- Video Modal -->
     <div class="video-modal" id="videoModal">
-        <div class="video-container">
-            <button class="close-modal" onclick="closeVideo()">✕</button>
-            <iframe id="videoPlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <div class="video-info-panel">
+        <div class="video-wrapper">
+            <div class="video-header">
                 <h3 class="video-title" id="modalTitle"></h3>
-                <p class="video-description" id="modalDescription"></p>
+                <button class="close-btn" onclick="closeVideo()">✕</button>
             </div>
+            <div class="video-container">
+                <iframe id="videoPlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="episode-list" id="episodeList"></div>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 NEONIME. All rights reserved. Stream responsibly.</p>
+        <p>&copy; 2026 AnimeStream. Semua konten dari Muse Indonesia dan channel resmi lainnya.</p>
     </footer>
 
     <script>
-        // Video player functions
-        function playVideo(videoId, title, description) {
+        let currentEpisodes = [];
+
+        function openVideo(title, videoId, episodes) {
+            currentEpisodes = episodes;
             const modal = document.getElementById('videoModal');
             const player = document.getElementById('videoPlayer');
             const modalTitle = document.getElementById('modalTitle');
-            const modalDescription = document.getElementById('modalDescription');
-            
-            // Set video source with autoplay
-            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            const episodeList = document.getElementById('episodeList');
+
+            // Set title
             modalTitle.textContent = title;
-            modalDescription.textContent = description;
-            
+
+            // Load video
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+
+            // Create episode list
+            episodeList.innerHTML = '<h4 style="margin-bottom: 0.5rem;">Daftar Episode:</h4>';
+            episodes.forEach(ep => {
+                const epDiv = document.createElement('div');
+                epDiv.className = 'episode-item';
+                epDiv.textContent = ep.title;
+                epDiv.onclick = () => switchEpisode(ep.id);
+                episodeList.appendChild(epDiv);
+            });
+
             // Show modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
+        function switchEpisode(videoId) {
+            const player = document.getElementById('videoPlayer');
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        }
+
         function closeVideo() {
             const modal = document.getElementById('videoModal');
             const player = document.getElementById('videoPlayer');
-            
-            // Stop video
+
             player.src = '';
-            
-            // Hide modal
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
-        // Close modal when clicking outside video container
-        document.getElementById('videoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeVideo();
-            }
-        });
-
-        // Close modal with ESC key
-        document.addEventListener('keydown', function(e) {
+        // Close with ESC key
+        document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeVideo();
             }
         });
 
-        // Category filtering
-        const categoryBtns = document.querySelectorAll('.category-btn');
-        categoryBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                categoryBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
+        // Close when clicking outside
+        document.getElementById('videoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'videoModal') {
+                closeVideo();
+            }
         });
 
         // Smooth scroll
@@ -793,18 +600,9 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
-        });
-
-        // Parallax effect on hero
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero-bg');
-            if (hero) {
-                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
         });
     </script>
 </body>
