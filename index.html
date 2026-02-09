@@ -1,512 +1,811 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waifu Database - 320+ Characters</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <title>NEONIME - Stream Anime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary: #6366f1; --primary-dark: #4f46e5; --white: #ffffff;
-            --light-bg: #f8fafc; --text-dark: #1e293b; --text-light: #64748b;
-            --border: #e2e8f0; --shadow: rgba(0, 0, 0, 0.1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        body { font-family: 'Quicksand', sans-serif; background: var(--light-bg); color: var(--text-dark); }
-        header { text-align: center; padding: 2rem; background: white; border-bottom: 1px solid var(--border); position: relative; }
-        .settings-btn { position: absolute; top: 1rem; right: 1rem; padding: 0.6rem 1rem; background: var(--light-bg); border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 1.2rem; }
-        .settings-btn:hover { background: var(--primary); color: white; }
-        h1 { font-family: 'Pacifico', cursive; font-size: 2.5rem; color: var(--primary); }
-        .tagline { color: var(--text-light); margin-top: 0.5rem; }
-        .nav-tabs { display: flex; justify-content: center; gap: 1rem; padding: 1rem; background: white; border-bottom: 2px solid var(--border); flex-wrap: wrap; }
-        .nav-tab { padding: 0.6rem 1.5rem; border: 2px solid var(--border); background: var(--white); color: var(--text-dark); border-radius: 8px; cursor: pointer; font-weight: 700; }
-        .nav-tab:hover { background: var(--light-bg); }
-        .nav-tab.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .controls { display: flex; justify-content: center; gap: 1rem; padding: 1.5rem; background: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-        .search-input { padding: 0.8rem 1.2rem; border: 2px solid var(--border); border-radius: 8px; font-size: 1rem; width: 300px; }
-        .search-input:focus { border-color: var(--primary); outline: none; }
-        .filter-btn { padding: 0.6rem 1.2rem; border: 2px solid var(--border); background: var(--white); border-radius: 8px; cursor: pointer; font-weight: 600; }
-        .filter-btn.active { background: var(--primary); color: var(--white); }
-        .container { max-width: 1600px; margin: 0 auto; padding: 2rem; }
-        .waifu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; }
-        .waifu-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px var(--shadow); border: 1px solid var(--border); cursor: pointer; transition: transform 0.3s; }
-        .waifu-card:hover { transform: translateY(-4px); border-color: var(--primary); }
-        .waifu-image { width: 100%; height: 280px; background: var(--light-bg); position: relative; }
-        .waifu-image img { width: 100%; height: 100%; object-fit: cover; }
-        .waifu-info { padding: 1rem; }
-        .waifu-name { font-size: 1.2rem; color: var(--primary); font-weight: 700; margin-bottom: 0.3rem; }
-        .waifu-anime { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.5rem; }
-        .detail-row { display: flex; justify-content: space-between; padding: 0.3rem; background: var(--light-bg); border-radius: 4px; margin-bottom: 0.3rem; font-size: 0.8rem; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 2rem; }
-        .modal.active { display: flex; }
-        .modal-content { background: white; border-radius: 16px; padding: 2rem; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
-        .close-modal { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; cursor: pointer; background: var(--light-bg); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .close-modal:hover { background: var(--primary); color: white; }
-        .modal-image { width: 100%; max-height: 350px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem; }
-        .modal-name { font-size: 2rem; color: var(--primary); font-family: 'Pacifico', cursive; margin-bottom: 0.5rem; text-align: center; }
-        .modal-anime { font-size: 1.1rem; color: var(--text-light); text-align: center; margin-bottom: 1.5rem; }
-        .info-section { background: var(--light-bg); padding: 1rem; border-radius: 12px; margin-bottom: 1rem; }
-        .info-title { color: var(--primary); font-size: 1.1rem; margin-bottom: 0.8rem; font-weight: 700; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; }
-        .info-item { display: flex; justify-content: space-between; padding: 0.5rem; background: white; border-radius: 6px; font-size: 0.85rem; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
-        .gallery-item { position: relative; padding-bottom: 100%; overflow: hidden; border-radius: 8px; cursor: pointer; }
-        .gallery-item:hover { transform: scale(1.05); }
-        .gallery-item img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-        .settings-modal { background: white; border-radius: 16px; padding: 2rem; max-width: 400px; width: 90%; }
-        .language-select { width: 100%; padding: 0.8rem; border: 2px solid var(--border); border-radius: 8px; margin-top: 0.5rem; }
-        .save-btn { width: 100%; padding: 0.8rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 1rem; }
-        .save-btn:hover { background: var(--primary-dark); }
-        .random-container { max-width: 700px; margin: 3rem auto; text-align: center; }
-        .random-btn { padding: 1.2rem 2.5rem; font-size: 1.2rem; background: var(--primary); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 700; }
-        .random-btn:hover { background: var(--primary-dark); }
-        .upload-area { border: 3px dashed var(--border); border-radius: 12px; padding: 2.5rem; text-align: center; cursor: pointer; background: white; margin: 2rem auto; max-width: 600px; }
-        .upload-area:hover { border-color: var(--primary); }
-        .preview-image { max-width: 100%; max-height: 350px; border-radius: 12px; margin: 1rem 0; display: none; }
+
+        :root {
+            --neon-pink: #ff006e;
+            --neon-blue: #00d9ff;
+            --neon-purple: #a537fd;
+            --neon-green: #39ff14;
+            --dark-bg: #0a0a0f;
+            --dark-panel: #151520;
+            --accent-glow: 0 0 20px rgba(255, 0, 110, 0.5);
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--dark-bg);
+            color: #fff;
+            overflow-x: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="4" fill="%23ff006e" opacity="0.6"/></svg>'), auto;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(165, 55, 253, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 0, 110, 0.1) 0%, transparent 50%);
+            animation: bgShift 20s ease infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        /* Glitch effect */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch:hover {
+            animation: glitch 0.3s infinite;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 0, 110, 0.3);
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+            letter-spacing: 3px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: -80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, rgba(255, 0, 110, 0.3), rgba(165, 55, 253, 0.2)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23151520" width="1200" height="800"/><g opacity="0.1"><line x1="0" y1="100" x2="1200" y2="100" stroke="%23ff006e" stroke-width="1"/><line x1="0" y1="200" x2="1200" y2="200" stroke="%2300d9ff" stroke-width="1"/><line x1="0" y1="300" x2="1200" y2="300" stroke="%23a537fd" stroke-width="1"/><line x1="0" y1="400" x2="1200" y2="400" stroke="%23ff006e" stroke-width="1"/><line x1="0" y1="500" x2="1200" y2="500" stroke="%2300d9ff" stroke-width="1"/><line x1="0" y1="600" x2="1200" y2="600" stroke="%23a537fd" stroke-width="1"/><line x1="0" y1="700" x2="1200" y2="700" stroke="%23ff006e" stroke-width="1"/></g></svg>');
+            background-size: cover;
+            filter: blur(0px);
+            animation: heroZoom 30s ease infinite alternate;
+        }
+
+        @keyframes heroZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease 0.3s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(255, 0, 110, 0.8);
+        }
+
+        /* Section */
+        section {
+            position: relative;
+            z-index: 10;
+            padding: 5rem 4rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-pink), transparent);
+        }
+
+        /* Anime Grid */
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .anime-card {
+            position: relative;
+            background: var(--dark-panel);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.6s ease backwards;
+        }
+
+        .anime-card:nth-child(1) { animation-delay: 0.1s; }
+        .anime-card:nth-child(2) { animation-delay: 0.2s; }
+        .anime-card:nth-child(3) { animation-delay: 0.3s; }
+        .anime-card:nth-child(4) { animation-delay: 0.4s; }
+        .anime-card:nth-child(5) { animation-delay: 0.5s; }
+        .anime-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .anime-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(255, 0, 110, 0.3);
+            border-color: var(--neon-pink);
+        }
+
+        .anime-thumbnail {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--dark-panel), rgba(165, 55, 253, 0.2));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .anime-thumbnail::after {
+            content: 'PLAY';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        .anime-card:hover .anime-thumbnail::after {
+            opacity: 1;
+        }
+
+        .anime-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .anime-card:hover .anime-thumbnail img {
+            transform: scale(1.1);
+            filter: brightness(0.4);
+        }
+
+        .anime-info {
+            padding: 1.5rem;
+        }
+
+        .anime-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .anime-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
+        }
+
+        .anime-rating {
+            color: var(--neon-green);
+            font-weight: 600;
+        }
+
+        .anime-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 0, 110, 0.2);
+            border: 1px solid var(--neon-pink);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--neon-pink);
+            font-weight: 600;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 15, 0.9);
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 0, 110, 0.3);
+            margin-top: 5rem;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--neon-pink), var(--neon-purple));
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-pink);
+        }
+
+        /* Video Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-container {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(255, 0, 110, 0.5);
+            animation: scaleIn 0.4s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            line-height: 1;
+        }
+
+        .close-modal:hover {
+            color: var(--neon-pink);
+            text-shadow: 0 0 20px var(--neon-pink);
+            transform: rotate(90deg);
+        }
+
+        .video-info-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+            padding: 2rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .video-container:hover .video-info-panel {
+            transform: translateY(0);
+        }
+
+        .video-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .waifu-grid { grid-template-columns: 1fr; }
-            .search-input { width: 100%; }
+            header {
+                padding: 1rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                gap: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .anime-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+
+            section {
+                padding: 3rem 2rem;
+            }
+
+            .video-container {
+                width: 95%;
+            }
+
+            .close-modal {
+                top: -40px;
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <button class="settings-btn" onclick="openSettings()">⚙️</button>
-        <h1 id="headerTitle">Waifu Database</h1>
-        <p class="tagline" id="headerTagline">320+ KARAKTER ANIME</p>
+        <div class="logo glitch">NEONIME</div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#trending">Trending</a>
+            <a href="#genres">Genres</a>
+            <a href="#schedule">Schedule</a>
+        </nav>
     </header>
 
-    <div class="nav-tabs">
-        <button class="nav-tab active" onclick="switchTab('browse')" id="tabBrowse">Jelajahi Semua</button>
-        <button class="nav-tab" onclick="switchTab('random')" id="tabRandom">Karakter Acak</button>
-        <button class="nav-tab" onclick="switchTab('recognizer')" id="tabRecognizer">Pengenal Karakter</button>
-    </div>
-
-    <div id="browseTab" class="tab-content active">
-        <div class="controls">
-            <input type="text" class="search-input" id="searchInput" placeholder="Cari nama karakter atau anime...">
-            <button class="filter-btn active" data-filter="all">Semua</button>
-            <button class="filter-btn" data-filter="action">Aksi</button>
-            <button class="filter-btn" data-filter="romance">Romantis</button>
-            <button class="filter-btn" data-filter="fantasy">Fantasi</button>
-            <button class="filter-btn" data-filter="comedy">Komedi</button>
-        </div>
-        <div class="container">
-            <div class="waifu-grid" id="waifuGrid"></div>
+    <div class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1>Stream The Future</h1>
+            <p>Immerse yourself in the ultimate anime experience. Thousands of episodes, zero limits.</p>
+            <a href="#trending" class="cta-button">Start Watching</a>
         </div>
     </div>
 
-    <div id="randomTab" class="tab-content">
-        <div class="random-container">
-            <h2 style="font-size: 2rem; margin-bottom: 2rem; color: var(--primary);" id="randomTitle">Temukan Karakter Acak!</h2>
-            <button class="random-btn" onclick="generateRandom()">Buat Karakter Acak</button>
-            <div id="randomResult" style="margin-top: 2rem;"></div>
+    <section id="trending">
+        <h2 class="section-title">Trending Now</h2>
+        
+        <div class="categories">
+            <button class="category-btn active">All</button>
+            <button class="category-btn">Action</button>
+            <button class="category-btn">Romance</button>
+            <button class="category-btn">Sci-Fi</button>
+            <button class="category-btn">Fantasy</button>
+            <button class="category-btn">Thriller</button>
         </div>
-    </div>
 
-    <div id="recognizerTab" class="tab-content">
-        <div class="container">
-            <h2 style="text-align: center; color: var(--primary); margin-bottom: 2rem;">Pengenal Karakter</h2>
-            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">📤</div>
-                <h3>Unggah Gambar Karakter</h3>
-                <p style="color: var(--text-light); margin-top: 0.5rem;">Klik atau seret gambar ke sini</p>
-                <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-            </div>
-            <img id="previewImage" class="preview-image">
-            <div style="text-align: center;">
-                <button class="random-btn" onclick="recognizeCharacter()" style="display: none; font-size: 1rem; padding: 1rem 2rem;" id="recognizeBtn">Kenali Karakter</button>
-            </div>
-            <div id="recognitionResults"></div>
-        </div>
-    </div>
-
-    <div class="modal" id="settingsModal">
-        <div class="settings-modal">
-            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Pengaturan</h2>
-            <label style="font-weight: 700; color: var(--text-dark);">Bahasa / Language</label>
-            <select class="language-select" id="languageSelect" onchange="changeLanguage()">
-                <option value="id">Bahasa Indonesia</option>
-                <option value="en">English</option>
-                <option value="jp">日本語</option>
-            </select>
-            <button class="save-btn" onclick="closeSettings()">Tutup</button>
-        </div>
-    </div>
-
-    <div class="modal" id="waifuModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">×</span>
-            <div id="modalDetails"></div>
-        </div>
-    </div>
-
-    <script>
-const translations = {
-    id: {
-        headerTitle: "Database Waifu",
-        headerTagline: "320+ KARAKTER ANIME",
-        tabBrowse: "Jelajahi Semua",
-        tabRandom: "Karakter Acak",
-        tabRecognizer: "Pengenal Karakter",
-        hair: "Rambut", eyes: "Mata", age: "Umur", height: "Tinggi", role: "Peran",
-        basicInfo: "Informasi Dasar", genres: "Genre", gallery: "Galeri", about: "Tentang"
-    },
-    en: {
-        headerTitle: "Waifu Database",
-        headerTagline: "320+ ANIME CHARACTERS",
-        tabBrowse: "Browse All",
-        tabRandom: "Random Character",
-        tabRecognizer: "Character Recognizer",
-        hair: "Hair", eyes: "Eyes", age: "Age", height: "Height", role: "Role",
-        basicInfo: "Basic Information", genres: "Genres", gallery: "Gallery", about: "About"
-    },
-    jp: {
-        headerTitle: "ワイフデータベース",
-        headerTagline: "320+ キャラクター",
-        tabBrowse: "すべて閲覧",
-        tabRandom: "ランダム",
-        tabRecognizer: "認識",
-        hair: "髪", eyes: "目", age: "年齢", height: "身長", role: "役割",
-        basicInfo: "基本情報", genres: "ジャンル", gallery: "ギャラリー", about: "について"
-    }
-};
-
-let currentLanguage = 'id';
-let allCharacters = [];
-let filteredCharacters = [];
-let currentFilter = 'all';
-
-function initializeDatabase() {
-    const animeData = [
-        {anime: "Re:Zero", malId: 31240, names: ["Rem", "Ram", "Emilia", "Beatrice", "Felt", "Crusch", "Priscilla", "Anastasia", "Echidna", "Minerva"], genre: ["fantasy", "action"]},
-        {anime: "Spy x Family", malId: 50265, names: ["Yor Forger", "Anya Forger", "Fiona Frost", "Becky Blackbell", "Sylvia Sherwood"], genre: ["action", "comedy"]},
-        {anime: "Kimetsu no Yaiba", malId: 38000, names: ["Nezuko", "Shinobu", "Mitsuri", "Kanao", "Kanae", "Aoi", "Makomo", "Tamayo", "Daki", "Nakime", "Susamaru", "Mother Spider"], genre: ["action", "fantasy"]},
-        {anime: "Attack on Titan", malId: 16498, names: ["Mikasa", "Annie", "Historia", "Sasha", "Pieck", "Ymir", "Hange", "Gabi", "Yelena", "Hitch"], genre: ["action", "fantasy"]},
-        {anime: "Naruto", malId: 1735, names: ["Hinata", "Sakura", "Tsunade", "Temari", "Ino", "Tenten", "Kushina", "Konan", "Kaguya", "Kurenai", "Anko", "Hanabi", "Mei"], genre: ["action"]},
-        {anime: "Sword Art Online", malId: 11757, names: ["Asuna", "Sinon", "Yui", "Silica", "Lisbeth", "Suguha", "Yuuki", "Alice", "Sortiliena", "Tiese"], genre: ["action", "fantasy"]},
-        {anime: "Seishun Buta Yarou", malId: 37450, names: ["Mai Sakurajima", "Tomoe Koga", "Rio Futaba", "Nodoka Toyohama", "Kaede Azusagawa"], genre: ["romance", "fantasy"]},
-        {anime: "High School DxD", malId: 11617, names: ["Rias Gremory", "Akeno", "Koneko", "Asia", "Xenovia", "Irina", "Rossweisse", "Ravel"], genre: ["action", "romance"]},
-        {anime: "Violet Evergarden", malId: 33352, names: ["Violet", "Cattleya", "Iris", "Luculia", "Charlotte"], genre: ["fantasy", "slice-of-life"]},
-        {anime: "Fate/stay night", malId: 356, names: ["Saber", "Rin Tohsaka", "Sakura", "Jeanne", "Mordred", "Astolfo", "Mash", "Scathach", "Ishtar", "Nero", "Tamamo", "Musashi", "BB", "Illya", "Ereshkigal"], genre: ["action", "fantasy"]},
-        {anime: "Bakemonogatari", malId: 5081, names: ["Hitagi", "Shinobu", "Nadeko", "Suruga", "Mayoi", "Tsubasa", "Karen", "Tsukihi", "Yotsugi", "Ougi"], genre: ["romance", "fantasy"]},
-        {anime: "One Piece", malId: 21, names: ["Nami", "Robin", "Hancock", "Vivi", "Perona", "Bonney", "Rebecca", "Carrot", "Yamato", "Ulti", "Tashigi", "Hiyori"], genre: ["action", "adventure"]},
-        {anime: "Bleach", malId: 269, names: ["Rukia", "Orihime", "Yoruichi", "Rangiku", "Nelliel", "Harribel", "Unohana", "Bambietta", "Candice", "Meninas"], genre: ["action", "fantasy"]},
-        {anime: "Boku no Hero Academia", malId: 31964, names: ["Ochaco", "Momo", "Kyoka", "Tsuyu", "Toga", "Mina", "Toru", "Mei", "Nejire", "Kendo", "Camie", "Mirko"], genre: ["action"]},
-        {anime: "Steins;Gate", malId: 9253, names: ["Kurisu Makise", "Mayuri", "Suzuha", "Faris", "Moeka"], genre: ["fantasy", "romance"]},
-        {anime: "KonoSuba", malId: 30831, names: ["Aqua", "Megumin", "Darkness", "Wiz", "Yunyun", "Chris", "Luna"], genre: ["comedy", "fantasy"]},
-        {anime: "Chainsaw Man", malId: 44511, names: ["Makima", "Power", "Himeno", "Kobeni", "Reze", "Quanxi", "Asa"], genre: ["action", "fantasy"]},
-        {anime: "Jujutsu Kaisen", malId: 40748, names: ["Nobara", "Maki", "Mei Mei", "Shoko", "Utahime", "Mai", "Miwa", "Momo", "Yuki", "Yorozu"], genre: ["action", "fantasy"]},
-        {anime: "Tokyo Ghoul", malId: 22319, names: ["Touka", "Rize", "Hinami", "Eto", "Akira", "Saiko"], genre: ["action", "fantasy"]},
-        {anime: "Code Geass", malId: 1575, names: ["C.C.", "Kallen", "Shirley", "Cornelia", "Euphemia", "Nina"], genre: ["action", "fantasy"]},
-        {anime: "Toradora", malId: 4224, names: ["Taiga", "Minori", "Ami", "Yasuko"], genre: ["romance", "comedy"]},
-        {anime: "Kaguya-sama", malId: 37999, names: ["Kaguya", "Chika", "Ai Hayasaka", "Miko Iino", "Kei"], genre: ["romance", "comedy"]},
-        {anime: "Frieren", malId: 52991, names: ["Frieren", "Fern", "Flamme", "Ubel", "Serie", "Aura"], genre: ["fantasy", "adventure"]},
-        {anime: "Dragon Ball Z", malId: 813, names: ["Bulma", "Android 18", "Chi-Chi", "Videl", "Launch"], genre: ["action", "adventure"]},
-        {anime: "Fairy Tail", malId: 6702, names: ["Lucy", "Erza", "Wendy", "Juvia", "Mirajane", "Levy", "Cana", "Ultear", "Minerva", "Kagura"], genre: ["action", "fantasy"]},
-        {anime: "One Punch Man", malId: 30276, names: ["Fubuki", "Tatsumaki", "Mosquito Girl"], genre: ["action", "comedy"]},
-        {anime: "Death Note", malId: 1535, names: ["Misa Amane", "Naomi Misora", "Takada"], genre: ["fantasy", "thriller"]},
-        {anime: "Evangelion", malId: 30, names: ["Rei Ayanami", "Asuka", "Misato", "Ritsuko", "Mari"], genre: ["action", "fantasy"]},
-        {anime: "Fullmetal Alchemist", malId: 5114, names: ["Winry", "Riza Hawkeye", "Olivier", "Izumi", "Lan Fan"], genre: ["action", "fantasy"]},
-        {anime: "5-toubun no Hanayome", malId: 38101, names: ["Miku", "Nino", "Itsuki", "Yotsuba", "Ichika"], genre: ["romance", "comedy"]},
-        {anime: "Horimiya", malId: 42897, names: ["Kyouko Hori", "Yuki", "Remi", "Sakura"], genre: ["romance", "slice-of-life"]},
-        {anime: "Nisekoi", malId: 18897, names: ["Chitoge", "Kosaki", "Marika", "Tsugumi"], genre: ["romance", "comedy"]},
-        {anime: "Shigatsu wa Kimi no Uso", malId: 23273, names: ["Kaori", "Tsubaki"], genre: ["romance", "music"]},
-        {anime: "Black Clover", malId: 34572, names: ["Noelle", "Mimosa", "Vanessa", "Charlotte", "Mereoleona", "Dorothy"], genre: ["action", "fantasy"]},
-        {anime: "Dr. Stone", malId: 38691, names: ["Kohaku", "Yuzuriha", "Nikki", "Suika"], genre: ["action", "adventure"]},
-        {anime: "Tensei Slime", malId: 37430, names: ["Shizu", "Shion", "Milim", "Shuna", "Treyni"], genre: ["fantasy", "action"]},
-        {anime: "Mushoku Tensei", malId: 39535, names: ["Roxy", "Eris", "Sylphiette", "Elinalise", "Ghislaine"], genre: ["fantasy", "adventure"]},
-        {anime: "Love Live", malId: 15051, names: ["Honoka", "Kotori", "Umi", "Maki", "Rin", "Hanayo", "Nico", "Eli", "Nozomi"], genre: ["slice-of-life", "music"]},
-        {anime: "Date A Live", malId: 15583, names: ["Tohka", "Kurumi", "Kotori", "Yoshino", "Origami", "Miku"], genre: ["action", "romance"]},
-        {anime: "Rent-a-Girlfriend", malId: 40839, names: ["Chizuru", "Mami", "Ruka", "Sumi"], genre: ["romance", "comedy"]},
-        {anime: "Fire Force", malId: 38671, names: ["Maki", "Tamaki", "Iris", "Hibana"], genre: ["action", "fantasy"]},
-        {anime: "Angel Beats", malId: 6547, names: ["Kanade", "Yuri", "Yui", "Iwasawa"], genre: ["fantasy", "slice-of-life"]},
-        {anime: "K-On!", malId: 5680, names: ["Yui", "Mio", "Azusa", "Ritsu", "Mugi"], genre: ["slice-of-life", "music"]},
-        {anime: "Clannad", malId: 2167, names: ["Nagisa", "Kyou", "Tomoyo", "Kotomi", "Fuko"], genre: ["romance", "slice-of-life"]},
-    ];
-
-    const hairColors = ["Black", "Brown", "Blonde", "Red", "Pink", "Blue", "Purple", "White", "Silver", "Green", "Orange"];
-    const eyeColors = ["Brown", "Blue", "Green", "Red", "Purple", "Gold", "Gray", "Pink", "Black", "Hazel"];
-    const roles = ["Main Character", "Protagonist", "Supporting", "Deuteragonist", "Main Heroine"];
-    const heights = ["145", "150", "153", "156", "159", "162", "165", "168", "171", "174"];
-    const ages = ["14", "15", "16", "17", "18", "19", "20", "21", "Unknown"];
-
-    const characters = [];
-    let charId = 0;
-
-    animeData.forEach(anime => {
-        anime.names.forEach(name => {
-            const hair = hairColors[Math.floor(Math.random() * hairColors.length)];
-            const eyes = eyeColors[Math.floor(Math.random() * eyeColors.length)];
-            const role = roles[Math.floor(Math.random() * roles.length)];
-            const height = heights[Math.floor(Math.random() * heights.length)];
-            const age = ages[Math.floor(Math.random() * ages.length)];
-            
-            const imageId = (charId % 50) + 1;
-            const image = `https://via.placeholder.com/280x320/818cf8/ffffff?text=${encodeURIComponent(name)}`;
-            
-            const gallery = [
-                image,
-                `https://via.placeholder.com/280x320/ec4899/ffffff?text=${encodeURIComponent(name)}+2`,
-                `https://via.placeholder.com/280x320/8b5cf6/ffffff?text=${encodeURIComponent(name)}+3`
-            ];
-
-            characters.push({
-                name, 
-                anime: anime.anime,
-                malId: anime.malId,
-                genre: anime.genre,
-                hair, eyes, age,
-                height: height + " cm",
-                role,
-                image,
-                gallery
-            });
-            charId++;
-        });
-    });
-
-    return characters;
-}
-
-function setCookie(name, value, days) {
-    const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
-}
-
-function getCookie(name) {
-    return document.cookie.split('; ').reduce((r, v) => {
-        const parts = v.split('=');
-        return parts[0] === name ? decodeURIComponent(parts[1]) : r;
-    }, '');
-}
-
-function changeLanguage() {
-    currentLanguage = document.getElementById('languageSelect').value;
-    setCookie('waifuLang', currentLanguage, 365);
-    applyTranslations();
-}
-
-function applyTranslations() {
-    const t = translations[currentLanguage];
-    document.getElementById('headerTitle').textContent = t.headerTitle;
-    document.getElementById('headerTagline').textContent = t.headerTagline;
-    document.getElementById('tabBrowse').textContent = t.tabBrowse;
-    document.getElementById('tabRandom').textContent = t.tabRandom;
-    document.getElementById('tabRecognizer').textContent = t.tabRecognizer;
-}
-
-function loadSettings() {
-    const savedLang = getCookie('waifuLang');
-    if (savedLang) {
-        currentLanguage = savedLang;
-        document.getElementById('languageSelect').value = savedLang;
-        applyTranslations();
-    }
-}
-
-function openSettings() {
-    document.getElementById('settingsModal').classList.add('active');
-}
-
-function closeSettings() {
-    document.getElementById('settingsModal').classList.remove('active');
-}
-
-function switchTab(tab) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-
-    if (tab === 'browse') {
-        document.getElementById('browseTab').classList.add('active');
-        document.querySelectorAll('.nav-tab')[0].classList.add('active');
-    } else if (tab === 'random') {
-        document.getElementById('randomTab').classList.add('active');
-        document.querySelectorAll('.nav-tab')[1].classList.add('active');
-    } else if (tab === 'recognizer') {
-        document.getElementById('recognizerTab').classList.add('active');
-        document.querySelectorAll('.nav-tab')[2].classList.add('active');
-    }
-}
-
-function displayCharacters(characters) {
-    const grid = document.getElementById('waifuGrid');
-    const t = translations[currentLanguage];
-    
-    if (characters.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-light);">Karakter tidak ditemukan</div>';
-        return;
-    }
-
-    grid.innerHTML = characters.map((char, index) => `
-        <div class="waifu-card" onclick="showModal(${allCharacters.indexOf(char)})">
-            <div class="waifu-image">
-                <img src="${char.image}" alt="${char.name}">
-            </div>
-            <div class="waifu-info">
-                <div class="waifu-name">${char.name}</div>
-                <div class="waifu-anime">${char.anime}</div>
-                <div class="detail-row">
-                    <span>${t.hair}:</span>
-                    <span>${char.hair}</span>
+        <div class="anime-grid">
+            <div class="anime-card" onclick="playVideo('dQw4w9WgXcQ', 'Attack on Titan - Final Season', 'Humanity\'s last stand against the titans. Epic battles and shocking revelations.')">
+                <div class="anime-thumbnail">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #ff006e, #a537fd); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">ATTACK ON TITAN</div>
                 </div>
-                <div class="detail-row">
-                    <span>${t.eyes}:</span>
-                    <span>${char.eyes}</span>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-function setupEventListeners() {
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        filteredCharacters = allCharacters.filter(char => 
-            char.name.toLowerCase().includes(searchTerm) ||
-            char.anime.toLowerCase().includes(searchTerm)
-        );
-        applyFilters();
-        displayCharacters(filteredCharacters);
-    });
-
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentFilter = btn.dataset.filter;
-            applyFilters();
-            displayCharacters(filteredCharacters);
-        });
-    });
-}
-
-function applyFilters() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    filteredCharacters = allCharacters.filter(char => {
-        const matchesSearch = char.name.toLowerCase().includes(searchTerm) || char.anime.toLowerCase().includes(searchTerm);
-        if (currentFilter === 'all') return matchesSearch;
-        return matchesSearch && char.genre.includes(currentFilter);
-    });
-}
-
-function generateRandom() {
-    const randomChar = allCharacters[Math.floor(Math.random() * allCharacters.length)];
-    const resultDiv = document.getElementById('randomResult');
-    const t = translations[currentLanguage];
-    
-    resultDiv.innerHTML = `
-        <div class="waifu-card" style="max-width: 350px; margin: 0 auto;" onclick="showModal(${allCharacters.indexOf(randomChar)})">
-            <div class="waifu-image">
-                <img src="${randomChar.image}" alt="${randomChar.name}">
-            </div>
-            <div class="waifu-info">
-                <div class="waifu-name">${randomChar.name}</div>
-                <div class="waifu-anime">${randomChar.anime}</div>
-                <div class="detail-row"><span>${t.hair}:</span><span>${randomChar.hair}</span></div>
-                <div class="detail-row"><span>${t.eyes}:</span><span>${randomChar.eyes}</span></div>
-            </div>
-        </div>
-    `;
-}
-
-function handleImageUpload(event) {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            document.getElementById('previewImage').src = e.target.result;
-            document.getElementById('previewImage').style.display = 'block';
-            document.getElementById('recognizeBtn').style.display = 'inline-block';
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-function recognizeCharacter() {
-    const results = [...allCharacters].sort(() => 0.5 - Math.random()).slice(0, 3);
-    const confidences = [0.87, 0.72, 0.54];
-    
-    document.getElementById('recognitionResults').innerHTML = `
-        <div style="background: white; border-radius: 12px; padding: 1.5rem; margin-top: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-            <h3 style="color: var(--primary); margin-bottom: 1rem;">Hasil Pengenalan</h3>
-            ${results.map((char, i) => `
-                <div onclick="showModal(${allCharacters.indexOf(char)})" style="cursor: pointer; padding: 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 1rem;">
-                    <img src="${char.image}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
-                    <div style="flex: 1;">
-                        <div style="font-weight: 700; color: var(--primary);">${char.name}</div>
-                        <div style="font-size: 0.85rem; color: var(--text-light);">${char.anime}</div>
-                        <div style="font-size: 0.8rem; margin-top: 0.3rem;">Kepercayaan: ${(confidences[i] * 100).toFixed(1)}%</div>
+                <div class="anime-info">
+                    <h3 class="anime-title">Attack on Titan</h3>
+                    <div class="anime-meta">
+                        <span class="anime-rating">★ 9.2</span>
+                        <span>2024</span>
+                        <span>87 Episodes</span>
+                    </div>
+                    <div class="anime-tags">
+                        <span class="tag">Action</span>
+                        <span class="tag">Dark Fantasy</span>
                     </div>
                 </div>
-            `).join('')}
-        </div>
-    `;
-}
+            </div>
 
-function showModal(index) {
-    const char = allCharacters[index];
-    const t = translations[currentLanguage];
-    const modal = document.getElementById('waifuModal');
-    
-    document.getElementById('modalDetails').innerHTML = `
-        <img src="${char.image}" class="modal-image">
-        <div class="modal-name">${char.name}</div>
-        <div class="modal-anime">${char.anime}</div>
-        
-        <div class="info-section">
-            <div class="info-title">${t.basicInfo}</div>
-            <div class="info-grid">
-                <div class="info-item"><span>${t.hair}:</span><span>${char.hair}</span></div>
-                <div class="info-item"><span>${t.eyes}:</span><span>${char.eyes}</span></div>
-                <div class="info-item"><span>${t.age}:</span><span>${char.age}</span></div>
-                <div class="info-item"><span>${t.height}:</span><span>${char.height}</span></div>
-                <div class="info-item"><span>${t.role}:</span><span>${char.role}</span></div>
+            <div class="anime-card" onclick="playVideo('jNQXAC9IVRw', 'Demon Slayer - Mugen Train', 'Join Tanjiro and friends on an unforgettable journey aboard the Mugen Train.')">
+                <div class="anime-thumbnail">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #00d9ff, #a537fd); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">DEMON SLAYER</div>
+                </div>
+                <div class="anime-info">
+                    <h3 class="anime-title">Demon Slayer</h3>
+                    <div class="anime-meta">
+                        <span class="anime-rating">★ 9.0</span>
+                        <span>2024</span>
+                        <span>55 Episodes</span>
+                    </div>
+                    <div class="anime-tags">
+                        <span class="tag">Adventure</span>
+                        <span class="tag">Supernatural</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="anime-card" onclick="playVideo('e8YBesRKq_U', 'Jujutsu Kaisen - Shibuya Arc', 'The most intense arc yet. Cursed spirits vs Jujutsu sorcerers in an all-out war.')">
+                <div class="anime-thumbnail">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #39ff14, #00d9ff); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">JUJUTSU KAISEN</div>
+                </div>
+                <div class="anime-info">
+                    <h3 class="anime-title">Jujutsu Kaisen</h3>
+                    <div class="anime-meta">
+                        <span class="anime-rating">★ 8.8</span>
+                        <span>2024</span>
+                        <span>47 Episodes</span>
+                    </div>
+                    <div class="anime-tags">
+                        <span class="tag">Action</span>
+                        <span class="tag">Supernatural</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="anime-card" onclick="playVideo('ofSLCFYUJfA', 'Spy x Family - Mission Start', 'A spy, an assassin, and a telepath form the world\'s most unusual family.')">
+                <div class="anime-thumbnail">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #ff006e, #00d9ff); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">SPY X FAMILY</div>
+                </div>
+                <div class="anime-info">
+                    <h3 class="anime-title">Spy x Family</h3>
+                    <div class="anime-meta">
+                        <span class="anime-rating">★ 8.7</span>
+                        <span>2024</span>
+                        <span>37 Episodes</span>
+                    </div>
+                    <div class="anime-tags">
+                        <span class="tag">Comedy</span>
+                        <span class="tag">Action</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="anime-card" onclick="playVideo('v4yLeNt-kCU', 'Chainsaw Man - Devil Hunter', 'Denji becomes the Chainsaw Man to pay off his debts and live a normal life.')">
+                <div class="anime-thumbnail">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #a537fd, #ff006e); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">CHAINSAW MAN</div>
+                </div>
+                <div class="anime-info">
+                    <h3 class="anime-title">Chainsaw Man</h3>
+                    <div class="anime-meta">
+                        <span class="anime-rating">★ 8.6</span>
+                        <span>2024</span>
+                        <span>24 Episodes</span>
+                    </div>
+                    <div class="anime-tags">
+                        <span class="tag">Action</span>
+                        <span class="tag">Horror</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="anime-card" onclick="playVideo('fzQ6gRAEoy0', 'Frieren: Beyond Journey\'s End', 'An elf mage reflects on her adventures and the meaning of time and friendship.')">
+                <div class="anime-thumbnail">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #00d9ff, #39ff14); display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: white;">FRIEREN</div>
+                </div>
+                <div class="anime-info">
+                    <h3 class="anime-title">Frieren: Beyond Journey's End</h3>
+                    <div class="anime-meta">
+                        <span class="anime-rating">★ 9.3</span>
+                        <span>2024</span>
+                        <span>28 Episodes</span>
+                    </div>
+                    <div class="anime-tags">
+                        <span class="tag">Fantasy</span>
+                        <span class="tag">Adventure</span>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="info-section">
-            <div class="info-title">${t.gallery}</div>
-            <div class="gallery-grid">
-                ${char.gallery.map(img => `<div class="gallery-item"><img src="${img}"></div>`).join('')}
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-container">
+            <button class="close-modal" onclick="closeVideo()">✕</button>
+            <iframe id="videoPlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="video-info-panel">
+                <h3 class="video-title" id="modalTitle"></h3>
+                <p class="video-description" id="modalDescription"></p>
             </div>
         </div>
+    </div>
 
-        <div class="info-section">
-            <div class="info-title">${t.genres}</div>
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                ${char.genre.map(g => `<span style="background: var(--primary); color: white; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem;">${g}</span>`).join('')}
-            </div>
-        </div>
-    `;
-    
-    modal.classList.add('active');
-}
+    <footer>
+        <p>&copy; 2026 NEONIME. All rights reserved. Stream responsibly.</p>
+    </footer>
 
-function closeModal() {
-    document.getElementById('waifuModal').classList.remove('active');
-}
+    <script>
+        // Video player functions
+        function playVideo(videoId, title, description) {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            
+            // Set video source with autoplay
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+            
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-document.getElementById('waifuModal').addEventListener('click', (e) => {
-    if (e.target.id === 'waifuModal') closeModal();
-});
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoPlayer');
+            
+            // Stop video
+            player.src = '';
+            
+            // Hide modal
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
 
-document.getElementById('settingsModal').addEventListener('click', (e) => {
-    if (e.target.id === 'settingsModal') closeSettings();
-});
+        // Close modal when clicking outside video container
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideo();
+            }
+        });
 
-document.addEventListener('DOMContentLoaded', () => {
-    allCharacters = initializeDatabase();
-    filteredCharacters = [...allCharacters];
-    loadSettings();
-    displayCharacters(filteredCharacters);
-    setupEventListeners();
-    console.log(`Database loaded: ${allCharacters.length} characters`);
-});
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeVideo();
+            }
+        });
+
+        // Category filtering
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-bg');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
     </script>
 </body>
 </html>
