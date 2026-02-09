@@ -324,6 +324,89 @@
             }
         }
 
+        /* Season Tabs */
+        .season-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: #2a2a2a;
+            border: 2px solid transparent;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: #3a3a3a;
+        }
+
+        .tab-btn.active {
+            background: #e50914;
+            border-color: #e50914;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Genre Filter */
+        .genre-filter {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .genre-btn {
+            padding: 0.5rem 1rem;
+            background: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            color: #fff;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .genre-btn:hover,
+        .genre-btn.active {
+            background: #e50914;
+            border-color: #e50914;
+        }
+
+        /* Search */
+        .search-container {
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 1rem;
+            background: #2a2a2a;
+            border: 2px solid #3a3a3a;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #e50914;
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
@@ -371,149 +454,62 @@
 
     <!-- Main Content -->
     <div class="container">
-        <!-- Trending Section -->
-        <section id="trending">
-            <h2 class="section-title">🔥 Trending Sekarang</h2>
-            <div class="anime-grid">
-                <!-- Spy x Family -->
-                <div class="anime-card" onclick="openVideo('Spy x Family', 'fzQ6gRAEoy0', [
-                    {title: 'Episode 1', id: 'fzQ6gRAEoy0'},
-                    {title: 'Episode 2', id: 'ofSLCFYUJfA'},
-                    {title: 'Episode 3', id: 'v4yLeNt-kCU'}
-                ])">
-                    <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=250&h=350&fit=crop" alt="Spy x Family" class="anime-poster">
-                    <div class="anime-info">
-                        <div class="anime-title">Spy x Family</div>
-                        <div class="anime-meta">
-                            <span class="anime-rating">⭐ 8.7</span>
-                            <span>2024</span>
-                            <span>37 Eps</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Search -->
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Cari anime..." onkeyup="searchAnime()">
+        </div>
 
-                <!-- Demon Slayer -->
-                <div class="anime-card" onclick="openVideo('Demon Slayer: Kimetsu no Yaiba', 'jNQXAC9IVRw', [
-                    {title: 'Episode 1', id: 'jNQXAC9IVRw'},
-                    {title: 'Episode 2', id: 'e8YBesRKq_U'},
-                    {title: 'Episode 3', id: 'dQw4w9WgXcQ'}
-                ])">
-                    <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=250&h=350&fit=crop" alt="Demon Slayer" class="anime-poster">
-                    <div class="anime-info">
-                        <div class="anime-title">Demon Slayer: Kimetsu no Yaiba</div>
-                        <div class="anime-meta">
-                            <span class="anime-rating">⭐ 9.0</span>
-                            <span>2024</span>
-                            <span>55 Eps</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Genre Filter -->
+        <div class="genre-filter">
+            <button class="genre-btn active" onclick="filterGenre('all')">Semua</button>
+            <button class="genre-btn" onclick="filterGenre('action')">Action</button>
+            <button class="genre-btn" onclick="filterGenre('adventure')">Adventure</button>
+            <button class="genre-btn" onclick="filterGenre('comedy')">Comedy</button>
+            <button class="genre-btn" onclick="filterGenre('drama')">Drama</button>
+            <button class="genre-btn" onclick="filterGenre('fantasy')">Fantasy</button>
+            <button class="genre-btn" onclick="filterGenre('romance')">Romance</button>
+            <button class="genre-btn" onclick="filterGenre('thriller')">Thriller</button>
+            <button class="genre-btn" onclick="filterGenre('supernatural')">Supernatural</button>
+        </div>
 
-                <!-- Jujutsu Kaisen -->
-                <div class="anime-card" onclick="openVideo('Jujutsu Kaisen', 'e8YBesRKq_U', [
-                    {title: 'Episode 1', id: 'e8YBesRKq_U'},
-                    {title: 'Episode 2', id: 'jNQXAC9IVRw'},
-                    {title: 'Episode 3', id: 'fzQ6gRAEoy0'}
-                ])">
-                    <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=250&h=350&fit=crop" alt="Jujutsu Kaisen" class="anime-poster">
-                    <div class="anime-info">
-                        <div class="anime-title">Jujutsu Kaisen</div>
-                        <div class="anime-meta">
-                            <span class="anime-rating">⭐ 8.8</span>
-                            <span>2024</span>
-                            <span>47 Eps</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Season Tabs -->
+        <div class="season-tabs">
+            <button class="tab-btn active" onclick="switchTab('winter2024')">Winter 2024</button>
+            <button class="tab-btn" onclick="switchTab('fall2023')">Fall 2023</button>
+            <button class="tab-btn" onclick="switchTab('summer2023')">Summer 2023</button>
+            <button class="tab-btn" onclick="switchTab('spring2023')">Spring 2023</button>
+            <button class="tab-btn" onclick="switchTab('classic')">Classic</button>
+        </div>
 
-                <!-- One Piece -->
-                <div class="anime-card" onclick="openVideo('One Piece', 'dQw4w9WgXcQ', [
-                    {title: 'Episode 1100', id: 'dQw4w9WgXcQ'},
-                    {title: 'Episode 1101', id: 'fzQ6gRAEoy0'},
-                    {title: 'Episode 1102', id: 'jNQXAC9IVRw'}
-                ])">
-                    <img src="https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=250&h=350&fit=crop" alt="One Piece" class="anime-poster">
-                    <div class="anime-info">
-                        <div class="anime-title">One Piece</div>
-                        <div class="anime-meta">
-                            <span class="anime-rating">⭐ 9.5</span>
-                            <span>2024</span>
-                            <span>1100+ Eps</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Winter 2024 -->
+        <div id="winter2024" class="tab-content active">
+            <h2 class="section-title">❄️ Winter 2024</h2>
+            <div class="anime-grid" id="animeGrid"></div>
+        </div>
 
-        <!-- Ongoing Section -->
-        <section id="ongoing">
-            <h2 class="section-title">📺 Anime Ongoing</h2>
-            <div class="anime-grid">
-                <!-- Attack on Titan -->
-                <div class="anime-card" onclick="openVideo('Attack on Titan Final Season', 'dQw4w9WgXcQ', [
-                    {title: 'Episode 1', id: 'dQw4w9WgXcQ'},
-                    {title: 'Episode 2', id: 'fzQ6gRAEoy0'}
-                ])">
-                    <img src="https://images.unsplash.com/photo-1613376023733-0a73315d9b06?w=250&h=350&fit=crop" alt="Attack on Titan" class="anime-poster">
-                    <div class="anime-info">
-                        <div class="anime-title">Attack on Titan Final Season</div>
-                        <div class="anime-meta">
-                            <span class="anime-rating">⭐ 9.2</span>
-                            <span>2024</span>
-                            <span>87 Eps</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Fall 2023 -->
+        <div id="fall2023" class="tab-content">
+            <h2 class="section-title">🍂 Fall 2023</h2>
+            <div class="anime-grid" id="animeGridFall"></div>
+        </div>
 
-                <!-- Chainsaw Man -->
-                <div class="anime-card" onclick="openVideo('Chainsaw Man', 'v4yLeNt-kCU', [
-                    {title: 'Episode 1', id: 'v4yLeNt-kCU'},
-                    {title: 'Episode 2', id: 'ofSLCFYUJfA'}
-                ])">
-                    <img src="https://images.unsplash.com/photo-1606041011872-596597976b25?w=250&h=350&fit=crop" alt="Chainsaw Man" class="anime-poster">
-                    <div class="anime-info">
-                        <div class="anime-title">Chainsaw Man</div>
-                        <div class="anime-meta">
-                            <span class="anime-rating">⭐ 8.6</span>
-                            <span>2024</span>
-                            <span>24 Eps</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Summer 2023 -->
+        <div id="summer2023" class="tab-content">
+            <h2 class="section-title">☀️ Summer 2023</h2>
+            <div class="anime-grid" id="animeGridSummer"></div>
+        </div>
 
-                <!-- Frieren -->
-                <div class="anime-card" onclick="openVideo('Frieren: Beyond Journey\'s End', 'fzQ6gRAEoy0', [
-                    {title: 'Episode 1', id: 'fzQ6gRAEoy0'},
-                    {title: 'Episode 2', id: 'jNQXAC9IVRw'}
-                ])">
-                    <img src="https://images.unsplash.com/photo-1611419010196-a360856fc42f?w=250&h=350&fit=crop" alt="Frieren" class="anime-poster">
-                    <div class="anime-info">
-                        <div class="anime-title">Frieren: Beyond Journey's End</div>
-                        <div class="anime-meta">
-                            <span class="anime-rating">⭐ 9.3</span>
-                            <span>2024</span>
-                            <span>28 Eps</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Spring 2023 -->
+        <div id="spring2023" class="tab-content">
+            <h2 class="section-title">🌸 Spring 2023</h2>
+            <div class="anime-grid" id="animeGridSpring"></div>
+        </div>
 
-                <!-- My Hero Academia -->
-                <div class="anime-card" onclick="openVideo('My Hero Academia Season 7', 'ofSLCFYUJfA', [
-                    {title: 'Episode 1', id: 'ofSLCFYUJfA'},
-                    {title: 'Episode 2', id: 'v4yLeNt-kCU'}
-                ])">
-                    <img src="https://images.unsplash.com/photo-1601850494422-3cf14624b0b3?w=250&h=350&fit=crop" alt="My Hero Academia" class="anime-poster">
-                    <div class="anime-info">
-                        <div class="anime-title">My Hero Academia Season 7</div>
-                        <div class="anime-meta">
-                            <span class="anime-rating">⭐ 8.5</span>
-                            <span>2024</span>
-                            <span>25 Eps</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Classic -->
+        <div id="classic" class="tab-content">
+            <h2 class="section-title">⭐ Classic Anime</h2>
+            <div class="anime-grid" id="animeGridClassic"></div>
+        </div>
     </div>
 
     <!-- Video Modal -->
@@ -536,6 +532,178 @@
     </footer>
 
     <script>
+        // Anime Database (75+ anime)
+        const animeDatabase = {
+            winter2024: [
+                {title: 'Frieren: Beyond Journey\'s End', rating: 9.3, eps: 28, genre: 'fantasy', img: 'photo-1611419010196-a360856fc42f', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}, {title: 'Ep 2', id: 'jNQXAC9IVRw'}]},
+                {title: 'Spy x Family Season 2', rating: 8.7, eps: 12, genre: 'comedy', img: 'photo-1612036782180-6f0b6cd846fe', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}, {title: 'Ep 2', id: 'v4yLeNt-kCU'}]},
+                {title: 'Solo Leveling', rating: 8.9, eps: 12, genre: 'action', img: 'photo-1578632767115-351597cf2477', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}, {title: 'Ep 2', id: 'dQw4w9WgXcQ'}]},
+                {title: 'The Dangers in My Heart S2', rating: 8.5, eps: 13, genre: 'romance', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'Delicious in Dungeon', rating: 8.6, eps: 24, genre: 'fantasy', img: 'photo-1613376023733-0a73315d9b06', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: 'Metallic Rouge', rating: 7.8, eps: 13, genre: 'action', img: 'photo-1606041011872-596597976b25', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+                {title: 'Mashle Season 2', rating: 8.4, eps: 12, genre: 'comedy', img: 'photo-1618336753974-aae8e04506aa', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}]},
+                {title: 'The Unwanted Undead Adventurer S2', rating: 7.9, eps: 12, genre: 'fantasy', img: 'photo-1601850494422-3cf14624b0b3', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'Bucchigiri?!', rating: 7.7, eps: 12, genre: 'action', img: 'photo-1578632767115-351597cf2477', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'A Sign of Affection', rating: 8.3, eps: 12, genre: 'romance', img: 'photo-1611419010196-a360856fc42f', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+                {title: 'The Witch and the Beast', rating: 7.8, eps: 12, genre: 'fantasy', img: 'photo-1612036782180-6f0b6cd846fe', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: '7th Time Loop', rating: 8.1, eps: 12, genre: 'romance', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+                {title: 'Tsukimichi Season 2', rating: 8.2, eps: 25, genre: 'fantasy', img: 'photo-1613376023733-0a73315d9b06', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}]},
+                {title: 'Kingdom Season 5', rating: 8.7, eps: 26, genre: 'action', img: 'photo-1606041011872-596597976b25', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'Sasaki and Peeps', rating: 7.9, eps: 12, genre: 'comedy', img: 'photo-1618336753974-aae8e04506aa', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+            ],
+            fall2023: [
+                {title: 'Jujutsu Kaisen Season 2', rating: 9.0, eps: 23, genre: 'action', img: 'photo-1578632767115-351597cf2477', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}, {title: 'Ep 2', id: 'jNQXAC9IVRw'}]},
+                {title: 'Attack on Titan Final Season', rating: 9.2, eps: 87, genre: 'action', img: 'photo-1613376023733-0a73315d9b06', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}, {title: 'Ep 2', id: 'fzQ6gRAEoy0'}]},
+                {title: 'Spy x Family Code White', rating: 8.8, eps: 1, genre: 'action', img: 'photo-1612036782180-6f0b6cd846fe', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Movie', id: 'v4yLeNt-kCU'}]},
+                {title: 'The Apothecary Diaries', rating: 8.9, eps: 24, genre: 'drama', img: 'photo-1611419010196-a360856fc42f', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'Shangri-La Frontier', rating: 8.3, eps: 25, genre: 'adventure', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'Goblin Slayer Season 2', rating: 7.9, eps: 12, genre: 'fantasy', img: 'photo-1606041011872-596597976b25', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+                {title: 'Ron Kamonohashi', rating: 7.8, eps: 13, genre: 'thriller', img: 'photo-1618336753974-aae8e04506aa', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: 'I\'m in Love with the Villainess', rating: 8.1, eps: 12, genre: 'romance', img: 'photo-1601850494422-3cf14624b0b3', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+                {title: 'The Eminence in Shadow S2', rating: 8.5, eps: 12, genre: 'action', img: 'photo-1578632767115-351597cf2477', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}]},
+                {title: 'Spy Classroom Season 2', rating: 7.6, eps: 12, genre: 'action', img: 'photo-1613376023733-0a73315d9b06', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'A Girl & Her Guard Dog', rating: 7.5, eps: 12, genre: 'romance', img: 'photo-1612036782180-6f0b6cd846fe', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'Under Ninja', rating: 7.4, eps: 12, genre: 'action', img: 'photo-1611419010196-a360856fc42f', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+                {title: 'Overtake!', rating: 7.7, eps: 12, genre: 'drama', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: 'Ragna Crimson', rating: 7.8, eps: 24, genre: 'fantasy', img: 'photo-1606041011872-596597976b25', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+                {title: 'After-School Hanako-kun', rating: 7.6, eps: 4, genre: 'supernatural', img: 'photo-1618336753974-aae8e04506aa', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}]},
+            ],
+            summer2023: [
+                {title: 'Bleach: Thousand-Year Blood War', rating: 9.1, eps: 26, genre: 'action', img: 'photo-1578632767115-351597cf2477', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'Horimiya: The Missing Pieces', rating: 8.4, eps: 13, genre: 'romance', img: 'photo-1601850494422-3cf14624b0b3', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'Zom 100: Bucket List of the Dead', rating: 8.2, eps: 12, genre: 'comedy', img: 'photo-1613376023733-0a73315d9b06', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+                {title: 'The Devil is a Part-Timer!! S2', rating: 7.8, eps: 24, genre: 'comedy', img: 'photo-1612036782180-6f0b6cd846fe', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: 'My Happy Marriage', rating: 8.5, eps: 12, genre: 'romance', img: 'photo-1611419010196-a360856fc42f', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+                {title: 'Rent-a-Girlfriend Season 3', rating: 7.5, eps: 12, genre: 'romance', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}]},
+                {title: 'Undead Girl Murder Farce', rating: 7.9, eps: 13, genre: 'thriller', img: 'photo-1606041011872-596597976b25', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'Dark Gathering', rating: 7.7, eps: 25, genre: 'supernatural', img: 'photo-1618336753974-aae8e04506aa', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'The Girl I Like Forgot Her Glasses', rating: 7.6, eps: 13, genre: 'romance', img: 'photo-1578632767115-351597cf2477', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+                {title: 'Helck', rating: 8.0, eps: 24, gene: 'fantasy', img: 'photo-1613376023733-0a73315d9b06', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: 'The Masterful Cat Is Depressed Again', rating: 7.8, eps: 13, genre: 'comedy', img: 'photo-1612036782180-6f0b6cd846fe', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+                {title: 'Reign of the Seven Spellblades', rating: 7.5, eps: 15, genre: 'fantasy', img: 'photo-1611419010196-a360856fc42f', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}]},
+                {title: 'Level 1 Demon Lord', rating: 7.4, eps: 12, genre: 'comedy', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'Liar Liar', rating: 7.3, eps: 12, genre: 'thriller', img: 'photo-1606041011872-596597976b25', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'Sugar Apple Fairy Tale S2', rating: 7.7, eps: 12, genre: 'fantasy', img: 'photo-1618336753974-aae8e04506aa', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+            ],
+            spring2023: [
+                {title: 'Demon Slayer: Swordsmith Village', rating: 9.0, eps: 11, genre: 'action', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}, {title: 'Ep 2', id: 'e8YBesRKq_U'}]},
+                {title: 'Hell\'s Paradise', rating: 8.5, eps: 13, genre: 'action', img: 'photo-1578632767115-351597cf2477', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: 'My Love Story with Yamada-kun', rating: 8.2, eps: 12, genre: 'romance', img: 'photo-1613376023733-0a73315d9b06', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+                {title: 'Oshi no Ko', rating: 8.9, eps: 11, genre: 'drama', img: 'photo-1612036782180-6f0b6cd846fe', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}]},
+                {title: 'The Café Terrace and Its Goddesses', rating: 7.8, eps: 12, genre: 'romance', img: 'photo-1611419010196-a360856fc42f', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'Konosuba: An Explosion', rating: 8.1, eps: 12, genre: 'comedy', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'Dr. Stone: New World', rating: 8.6, eps: 22, genre: 'adventure', img: 'photo-1606041011872-596597976b25', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+                {title: 'The Marginal Service', rating: 7.3, eps: 12, genre: 'action', img: 'photo-1618336753974-aae8e04506aa', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: 'Mashle: Magic and Muscles', rating: 8.3, eps: 12, genre: 'comedy', img: 'photo-1578632767115-351597cf2477', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+                {title: 'My Home Hero', rating: 7.9, eps: 12, genre: 'thriller', img: 'photo-1613376023733-0a73315d9b06', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}]},
+                {title: 'Skip and Loafer', rating: 8.4, eps: 12, genre: 'romance', img: 'photo-1612036782180-6f0b6cd846fe', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'A Galaxy Next Door', rating: 7.5, eps: 12, genre: 'romance', img: 'photo-1611419010196-a360856fc42f', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'The Ancient Magus\' Bride S2', rating: 8.2, eps: 24, genre: 'fantasy', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+                {title: 'Tonikawa: Over the Moon', rating: 8.0, eps: 12, genre: 'romance', img: 'photo-1606041011872-596597976b25', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: 'Insomniacs After School', rating: 8.1, eps: 13, genre: 'romance', img: 'photo-1618336753974-aae8e04506aa', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+            ],
+            classic: [
+                {title: 'One Piece', rating: 9.5, eps: 1100, genre: 'adventure', img: 'photo-1618336753974-aae8e04506aa', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}, {title: 'Ep 2', id: 'fzQ6gRAEoy0'}]},
+                {title: 'Naruto', rating: 9.3, eps: 720, genre: 'action', img: 'photo-1578632767115-351597cf2477', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'Bleach', rating: 9.1, eps: 366, genre: 'action', img: 'photo-1613376023733-0a73315d9b06', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+                {title: 'Fullmetal Alchemist: Brotherhood', rating: 9.6, eps: 64, genre: 'adventure', img: 'photo-1612036782180-6f0b6cd846fe', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'Death Note', rating: 9.4, eps: 37, genre: 'thriller', img: 'photo-1611419010196-a360856fc42f', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+                {title: 'Hunter x Hunter', rating: 9.5, eps: 148, genre: 'adventure', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}]},
+                {title: 'Code Geass', rating: 9.2, eps: 50, genre: 'action', img: 'photo-1606041011872-596597976b25', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: 'Steins;Gate', rating: 9.4, eps: 24, genre: 'thriller', img: 'photo-1618336753974-aae8e04506aa', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'Cowboy Bebop', rating: 9.3, eps: 26, genre: 'action', img: 'photo-1578632767115-351597cf2477', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+                {title: 'Neon Genesis Evangelion', rating: 9.2, eps: 26, genre: 'drama', img: 'photo-1613376023733-0a73315d9b06', videoId: 'v4yLeNt-kCU', episodes: [{title: 'Ep 1', id: 'v4yLeNt-kCU'}]},
+                {title: 'My Hero Academia', rating: 8.8, eps: 138, genre: 'action', img: 'photo-1601850494422-3cf14624b0b3', videoId: 'ofSLCFYUJfA', episodes: [{title: 'Ep 1', id: 'ofSLCFYUJfA'}]},
+                {title: 'Tokyo Ghoul', rating: 8.5, eps: 48, genre: 'action', img: 'photo-1612036782180-6f0b6cd846fe', videoId: 'fzQ6gRAEoy0', episodes: [{title: 'Ep 1', id: 'fzQ6gRAEoy0'}]},
+                {title: 'Sword Art Online', rating: 8.3, eps: 96, genre: 'adventure', img: 'photo-1611419010196-a360856fc42f', videoId: 'dQw4w9WgXcQ', episodes: [{title: 'Ep 1', id: 'dQw4w9WgXcQ'}]},
+                {title: 'Re:Zero', rating: 8.9, eps: 50, genre: 'fantasy', img: 'photo-1607604276583-eef5d076aa5f', videoId: 'jNQXAC9IVRw', episodes: [{title: 'Ep 1', id: 'jNQXAC9IVRw'}]},
+                {title: 'Mob Psycho 100', rating: 8.8, eps: 37, genre: 'action', img: 'photo-1606041011872-596597976b25', videoId: 'e8YBesRKq_U', episodes: [{title: 'Ep 1', id: 'e8YBesRKq_U'}]},
+            ]
+        };
+
+        let currentGenre = 'all';
+        let currentTab = 'winter2024';
+
+        // Initialize page
+        renderAnime('winter2024', 'animeGrid');
+        renderAnime('fall2023', 'animeGridFall');
+        renderAnime('summer2023', 'animeGridSummer');
+        renderAnime('spring2023', 'animeGridSpring');
+        renderAnime('classic', 'animeGridClassic');
+
+        function renderAnime(season, gridId) {
+            const grid = document.getElementById(gridId);
+            const animeList = animeDatabase[season];
+            
+            grid.innerHTML = animeList.map(anime => `
+                <div class="anime-card" data-genre="${anime.genre}" data-title="${anime.title.toLowerCase()}" 
+                     onclick='openVideo("${anime.title}", "${anime.videoId}", ${JSON.stringify(anime.episodes)})'>
+                    <img src="https://images.unsplash.com/${anime.img}?w=250&h=350&fit=crop" 
+                         alt="${anime.title}" class="anime-poster">
+                    <div class="anime-info">
+                        <div class="anime-title">${anime.title}</div>
+                        <div class="anime-meta">
+                            <span class="anime-rating">⭐ ${anime.rating}</span>
+                            <span>${anime.eps} Eps</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            
+            // Reset filter
+            filterGenre('all');
+        }
+
+        function filterGenre(genre) {
+            currentGenre = genre;
+            
+            // Update genre buttons
+            document.querySelectorAll('.genre-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter cards
+            const activeGrid = document.querySelector('.tab-content.active .anime-grid');
+            const cards = activeGrid.querySelectorAll('.anime-card');
+            
+            cards.forEach(card => {
+                if (genre === 'all' || card.dataset.genre === genre) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function searchAnime() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const activeGrid = document.querySelector('.tab-content.active .anime-grid');
+            const cards = activeGrid.querySelectorAll('.anime-card');
+            
+            cards.forEach(card => {
+                const title = card.dataset.title;
+                const matchesGenre = currentGenre === 'all' || card.dataset.genre === currentGenre;
+                const matchesSearch = title.includes(searchTerm);
+                
+                if (matchesGenre && matchesSearch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
         let currentEpisodes = [];
 
         function openVideo(title, videoId, episodes) {
@@ -545,14 +713,10 @@
             const modalTitle = document.getElementById('modalTitle');
             const episodeList = document.getElementById('episodeList');
 
-            // Set title
             modalTitle.textContent = title;
-
-            // Load video
             player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
 
-            // Create episode list
-            episodeList.innerHTML = '<h4 style="margin-bottom: 0.5rem;">Daftar Episode:</h4>';
+            episodeList.innerHTML = '<h4 style="margin-bottom: 0.5rem; font-size: 1rem;">Daftar Episode:</h4>';
             episodes.forEach(ep => {
                 const epDiv = document.createElement('div');
                 epDiv.className = 'episode-item';
@@ -561,7 +725,6 @@
                 episodeList.appendChild(epDiv);
             });
 
-            // Show modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -574,34 +737,24 @@
         function closeVideo() {
             const modal = document.getElementById('videoModal');
             const player = document.getElementById('videoPlayer');
-
             player.src = '';
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
-        // Close with ESC key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeVideo();
-            }
+            if (e.key === 'Escape') closeVideo();
         });
 
-        // Close when clicking outside
         document.getElementById('videoModal').addEventListener('click', (e) => {
-            if (e.target.id === 'videoModal') {
-                closeVideo();
-            }
+            if (e.target.id === 'videoModal') closeVideo();
         });
 
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
             });
         });
     </script>
